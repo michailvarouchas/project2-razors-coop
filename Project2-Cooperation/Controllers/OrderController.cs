@@ -80,6 +80,7 @@ namespace Project2_Cooperation.Controllers
                 
                 //add transaction
 
+                //reduce product stock
                 foreach (var cartItem in checkOut.Order.CartItems)
                 {
                     ReduceProductStock(cartItem);

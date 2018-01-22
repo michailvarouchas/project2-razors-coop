@@ -84,6 +84,14 @@ namespace Project2_Cooperation.Controllers
 
         public IActionResult DeleteOrder(int id)
         {
+            var orderToDelete = _ordersRepo.GetOrders().Include(c => c.CartItems).SingleOrDefault(o => o.OrderId == id);
+
+            //roll-back product stock
+            foreach (var cartItem in orderToDelete.CartItems)
+            {
+                RollBackProductStock(cartItem);
+            }
+
             _ordersRepo.DeleteOrder(id);
 
             TempData["message"] = $"Order {id} deleted successfully.";
@@ -117,13 +125,9 @@ namespace Project2_Cooperation.Controllers
             return RedirectToAction(nameof(ViewOrders));
         }
 
-        public async Task<IActionResult> EditProduct(int id)
+        public IActionResult EditProduct(int id)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            Product product = _productsRepo.Products.Include(m => m.Member).SingleOrDefault(p => p.ProductId == id);
-
-            product.MemberId = currentUser.Id;
+            Product product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == id);
 
             return View(product);
         }
@@ -201,6 +205,15 @@ namespace Project2_Cooperation.Controllers
             var addedRoles = await _userManager.AddToRolesAsync(user, vm.Roles);
 
             return RedirectToAction(nameof(ViewUsers));
+        }
+
+        private void RollBackProductStock(CartItem ci)
+        {
+            var productToUpdate = _productsRepo.Products.FirstOrDefault(p => p.ProductId == ci.ProductId);
+
+            productToUpdate.Stock += ci.Quantity;
+
+            _productsRepo.UpdateProduct(productToUpdate);
         }
     }
 }
