@@ -35,14 +35,14 @@ namespace Project2_Cooperation.Models
             _session.Remove(_sessionKeyCart);
         }
 
-        public override void AddToCart(Product product, int quantity)
+        public override void AddToCart(Product product, int quantity = 1)
         {
             base.AddToCart(product, quantity);
 
             _session.SetString(_sessionKeyCart, JsonConvert.SerializeObject(this));
         }
 
-        public override void RemoveFromCart(Product product, int quantity)
+        public override void RemoveFromCart(Product product, int quantity = 1)
         {
             base.RemoveFromCart(product, quantity);
 

@@ -63,32 +63,47 @@ namespace Project2_Cooperation.Controllers
                 checkOut.Order.UserDetails.ApplicationUserId = _userManager.GetUserId(User);
 
                 //check availability
+                var ctr = new List<CartItem>();
+
                 foreach (var cartItem in checkOut.Order.CartItems)
                 {
-                    if (!IsAvailable(cartItem))
+                    var stock = GetAvailableStock(cartItem);
+                    if (stock == 0)
                     {
-                        _cart.RemoveFromCart(cartItem.Product, cartItem.Quantity);
+                        ctr.Add(cartItem);
                         availability &= false;
                     }
+                    if(stock < cartItem.Quantity)
+                    {
+                        _cart.RemoveFromCart(cartItem.Product, cartItem.Quantity - stock);
+                        availability &= false;
+                    }
+                }
+                foreach (var item in ctr)
+                {
+                    _cart.RemoveFromCart(item.Product, item.Quantity);
                 }
                 if (!availability)
                 {
                     checkOut.Cart = _cart;
-                    ViewData["failMessage"] = "Some products are no longer available thus removed from your cart!";
+                    TempData["failMessage"] = "Some products are no longer available thus removed from your cart!";
                     return View(checkOut);
                 }
-                
+
                 //add transaction
-
-                //reduce product stock
-                foreach (var cartItem in checkOut.Order.CartItems)
+                if (checkOut.Order.CartItems.Count() != 0)
                 {
-                    ReduceProductStock(cartItem);
-                }
-                    
-                _ordersRepo.CreateOrder(checkOut.Order);
+                    //reduce product stock
+                    foreach (var cartItem in checkOut.Order.CartItems)
+                    {
+                        ReduceProductStock(cartItem);
+                    }
 
-                return RedirectToAction(nameof(Completed));
+                    _ordersRepo.CreateOrder(checkOut.Order);
+                    
+                    return RedirectToAction(nameof(Completed));
+                }
+                TempData["failMessage"] = "Products in your cart are no longer available!";
             }
 
             checkOut.Cart = _cart;
@@ -112,11 +127,11 @@ namespace Project2_Cooperation.Controllers
             _productsRepo.UpdateProduct(productToUpdate);
         }
 
-        private bool IsAvailable(CartItem ci)
+        private int GetAvailableStock(CartItem ci)
         {
             var productToConfirm = _productsRepo.Products.FirstOrDefault(p => p.ProductId == ci.ProductId);
 
-            return productToConfirm.Stock >= ci.Quantity ? true : false;
+            return productToConfirm.Stock >= ci.Quantity ? ci.Quantity : productToConfirm.Stock;
         }
     }
 }
