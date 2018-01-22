@@ -39,7 +39,7 @@ var popUpCart = () => {
 
 var ajaxGetCart = () => {
     $.ajax({
-        url: 'api/cart',
+        url: '/api/cart',
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',

@@ -44,9 +44,9 @@ namespace Project2_Cooperation.Controllers
 
         //DELETE -- api/cart/5
         [HttpDelete]
-        public Product Delete([FromBody]string productId)
+        public Product Delete([FromBody]string prodId)
         {
-            var id = Int32.Parse(productId);
+            var id = Int32.Parse(prodId);
 
             var cartItemToRemove = _cart.CartItems.SingleOrDefault(ci => ci.Product.ProductId == id);
 

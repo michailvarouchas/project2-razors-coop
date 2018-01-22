@@ -28,7 +28,7 @@ namespace Project2_Cooperation.Controllers
         {
             var prodToAdd =_repository.Products.SingleOrDefault(p => p.ProductId == id);
 
-            _cart.AddToCart(prodToAdd);
+            _cart.AddToCart(prodToAdd, qty);
             
             TempData["message"] = $"Cart successfully updated";
 
