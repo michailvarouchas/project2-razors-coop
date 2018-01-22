@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+    Layout = "_AdminLayout";
+}
+
+@if (Model.Count() != 0)
+{
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>Title</th>
+            <th>Member</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var product in Model)
+        {
+            <tr>
+                
+                <td>@product.Title</td>
+                <td>@product.Member.Email</td>
+                <td>@product.Stock</td>
+                <td>@product.SalePrice.ToString("C")</td>
+                <td>@(product.IsLive ? "Live" : "Pending")</td>
+                <td>@product.Category</td>
+                <td>
+                    <a asp-action="EditProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
+                    <a asp-action="DeleteProduct" asp-route-id="@product.ProductId"><i class="fa fa-trash pl-3"></i></a>
+                </td>
+            </tr>
+
+        }
+    </table>
+}
+else
+{
+    <h4>There are no products available at the moment</h4>
+
+}
+
+    
+

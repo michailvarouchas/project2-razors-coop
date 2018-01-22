@@ -1,0 +1,77 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "EditOrder";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="EditOrder" method="post">
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="UserDetails.FirstName"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.FirstName" />
+                <span class="text-danger" asp-validation-for="UserDetails.FirstName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserDetails.LastName"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.LastName" />
+                <span class="text-danger" asp-validation-for="UserDetails.LastName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserDetails.Phone"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.Phone" />
+                <span class="text-danger" asp-validation-for="UserDetails.Phone"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserDetails.City"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.City" />
+                <span class="text-danger" asp-validation-for="UserDetails.City"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserDetails.Address"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.Address" />
+                <span class="text-danger" asp-validation-for="UserDetails.Address"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserDetails.Zip"></label>
+                <input type="text" class="form-control form-control-sm" asp-for="UserDetails.Zip" />
+                <span class="text-danger" asp-validation-for="UserDetails.Zip"></span>
+            </div>
+            <button type="submit" class="btn btn-primary mt-5 float-right">Save</button>
+            <a class="btn btn-secondary mt-5 mr-2 float-right" asp-controller="Cart" asp-action="Index">Back</a>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+    <div class="col-md-7">
+        @if (Model.CartItems.Count != 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotals</th>
+                </tr>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.Title</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Product.SalePrice</td>
+                        <td>@item.Subtotals</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3">Totals:</td>
+                    <td>@Model.Total</td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <h4>Your Cart is Empty</h4>
+
+        }
+    </div>
+</div>

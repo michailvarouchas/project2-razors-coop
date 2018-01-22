@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Eshop";
+}
+
+<div class="jumbotron jumbotron-fluid pt-2 pb-2 mt-2 mb-0 bg-white">
+    <div class="container">
+        <h1 class="display-4 text-center">Welcome to our cooperation shop</h1>
+        <h6 class="lead text-center">Fresh products delivered to your door!</h6>
+    </div>
+</div>
+<hr />
+
+<div class="row mt-4">
+    <div class="col-md-2">
+        <div class="alert alert-danger" role="alert">
+            Add button to: View all, view by category
+        </div>
+    </div>
+    <div class="col-md-10">
+        @if (Model != null)
+        {
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                    <div class="col-md-4 col-sm-6 position-relative product mb-3">
+                        <div class="card" style="height: 100%;">
+                            <img class="card-img-top" src="@product.ImageUrl" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">@product.Title</h5>
+
+                                @if (product.ShortDescription != null)
+                                {
+                                    <p class="card-text text-center">@product.ShortDescription</p>
+                                }
+                                <div class="text-center text-secondary"><h6>@product.SalePrice.ToString("C")</h6></div>
+                            </div>
+                            <div class="card-overlay">
+                                @if (product.Stock > 0)
+                                {
+                                    <span id="@product.ProductId" class="top-right text-dark overlay-text add-to-cart" title="Add to cart">
+                                        <i class="fa fa-shopping-bag"></i>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="top-right text-danger overlay-text" title="Out of Stock">
+                                        <i class="fa fa-exclamation"></i>
+                                    </span>
+
+                                }
+                                @if (User.IsInRole("User") || User.IsInRole("Member") || User.IsInRole("SuperAdmin"))
+                                {
+                                    <a asp-controller="Cart" asp-action="AddToWishList" asp-route-id="@product.ProductId" class="top-left text-dark overlay-text">
+                                        <i class="fa fa-heart-o"></i>
+                                    </a>
+
+                                }
+                                <a asp-controller="User" asp-action="SingleProduct" asp-route-id="@product.ProductId" class="overlay-text-more">
+                                    <i class="fa fa-info">  More...</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <h4>There are no products available at the moment</h4>
+
+        }
+    </div>
+</div>
+
+
+
+
+

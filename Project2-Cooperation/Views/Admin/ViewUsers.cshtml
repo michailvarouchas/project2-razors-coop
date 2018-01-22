@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ViewUsersViewModel>
+@{
+    ViewData["Title"] = "View Users";
+    Layout = "_AdminLayout";
+}
+@if (Model != null)
+{
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>E-mail</th>
+            <th>Role</th>
+            <th>Edit Role</th>
+        </tr>
+        @foreach (var vm in Model)
+        {
+            <tr>
+
+                <td>@vm.User</td>
+                <td>
+                    @foreach (var item in vm.Roles)
+                    {
+                        <span>@item</span>
+                    }
+                </td>
+                <td><a asp-action="EditUser" asp-route-id="@vm.User"><i class="fa fa-edit" title="Edit"></i></a></td>
+            </tr>
+
+        }
+    </table>
+}
+else
+{
+    <h4>There are no users available at the moment</h4>
+
+}
+

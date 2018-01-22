@@ -1,0 +1,32 @@
+﻿@model Cart
+
+<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-cart pr-1"><span id="cartCount" class="pl-1"></span></i></a>
+<ul id="cartItems" class="dropdown-menu dropdown-cart" aria-labelledby="navbarDropdown">
+
+    @*@if (Model.CartItems.Count() != 0)
+    {
+        @foreach (var item in Model.CartItems)
+        {
+            <li>
+                <span class="item">
+                    <span class="item-left">
+                        <img class="cart-img" src="@item.Product.ImageUrl" alt="" />
+                        <span class="item-info">
+                            <span>@item.Product.Title</span>
+                            <span>@item.Product.SalePrice.ToString("C")</span>
+                        </span>
+                    </span>
+                    <span class="item-right remove-from-cart">
+                        <a product-id="@item.ProductId" class="btn btn-xs pull-right"><i class="fa fa-close"></i></a>
+                    </span>
+                </span>
+            </li>
+        }
+        <li class="dropdown-divider"></li>
+        <li><a class="text-center" asp-controller="Cart" asp-action="Index"><h6>View Cart</h6></a></li>
+    }
+    else
+    {
+        <li class="nav-link dropdown-item row disabled text-center">Empty</li>
+    }*@
+</ul>

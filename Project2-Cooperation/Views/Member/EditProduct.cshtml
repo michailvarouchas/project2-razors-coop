@@ -1,0 +1,57 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "_AdminLayout";
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+<form class="mt-4" asp-action="EditProduct" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="ProductId" />
+    <input type="hidden" asp-for="MemberId" />
+    <h3 class="text-center text-primary bg-secondary text-light p-1 mb-3 rounded">This product is being reviewed</h3>
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input type="text" class="form-control form-control-sm" asp-for="Title" placeholder="Enter Product Title">
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <label asp-for="Category">Category</label>
+            <input type="text" class="form-control form-control-sm" asp-for="Category" placeholder="Enter Product Category">
+            <span asp-validation-for="Category"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Stock">Stock</label>
+            <input type="number" class="form-control form-control-sm" asp-for="Stock" placeholder="Enter Product Stock">
+            <span asp-validation-for="Stock"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="BuyPrice">BuyPrice (&euro;)</label>
+            <input type="text" class="form-control form-control-sm" asp-for="BuyPrice" placeholder="Enter Product Price" disabled>
+        </div>
+        <input type="hidden" asp-for="SalePrice">
+    </div>
+    <div class="form-group mt-3">
+        <label asp-for="Description">Description</label>
+        <textarea class="description" asp-for="Description" placeholder="Enter Product Description"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="ShortDescription">Short Description</label>
+        <textarea class="short-description" asp-for="ShortDescription" placeholder="Enter Product Short Description"></textarea>
+    </div>
+
+    <input type="hidden" asp-for="ImageUrl" />
+    <div class="row">
+        <div class="col-md-3">
+            <img id="imagePreview" class="img-thumbnail img-fluid" src="@Model.ImageUrl" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile">Edit Image</label>
+        <input id="imageInput" type="file" class="form-control-file btn btn-sm d-block pl-0" asp-for="ImageFile">
+    </div>
+    <button type="submit" class="btn btn-primary mt-5 float-right">Update</button>
+    <a class="btn btn-secondary mt-5 mr-2 float-right" asp-action="Index">Cancel</a>
+    <div class="clearfix"></div>
+</form>
+
+

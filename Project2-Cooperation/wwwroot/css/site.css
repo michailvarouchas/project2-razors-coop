@@ -1,0 +1,221 @@
+﻿body {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+/*THE RAZORS CSS (Eshop page)*/
+/*equal card-images and positioning*/
+.card-img-top {
+    height: 10rem;
+    object-fit: cover;
+}
+
+.card-title {
+    height: 2.8rem;
+    overflow: hidden;
+}
+
+.card-text {
+    height: 6rem;
+    overflow: hidden;
+}
+
+.short-description {
+    height: 200px;
+    width: 100%;
+}
+
+.description {
+    height: 400px;
+    width: 100%;
+}
+
+.breadcrumb {
+    background-color: transparent;
+}
+
+    .breadcrumb > li > a {
+        color: dimgrey;
+    }
+
+.top-left {
+    position: absolute;
+    top: 0.7rem;
+    left: 1rem;
+}
+
+.top-right {
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+}
+
+/*cart arrows*/
+.bottom-right-cart-arrow {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 1rem;
+    font-size: 1.3rem;
+}
+
+.top-right-cart-arrow {
+    position: absolute;
+    top: 0.6rem;
+    right: 1rem;
+    font-size: 1.3rem;
+}
+
+/*card overlay*/
+.card {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.card-overlay {
+    transition: .5s ease;
+    opacity: 0;
+    text-align: center;
+}
+
+.product:hover .card-img-top {
+    opacity: 0.6;
+}
+
+.product:hover .card-overlay {
+    opacity: 1;
+}
+
+.product:hover .card {
+    cursor: pointer;
+    box-shadow: 0px 4px 9px 3px;
+}
+
+.overlay-text i {
+    transition: 0.5s ease;
+    background-color: aliceblue;
+    padding: 1.15em 0.1em;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.overlay-text:hover i {
+    background-color: darkgray;
+    color: white;
+}
+
+.overlay-text-more i {
+    transition: 0.5s ease;
+    background-color: aliceblue;
+    padding: 0.5em 0.7em;
+    border-radius: 1.1em;
+    margin-bottom: 1.1em;
+}
+
+.overlay-text-more:hover i {
+    background-color: darkgray;
+    color: white;
+}
+
+.transp {
+    background-color: transparent !important;
+}
+
+/*AUTHENTICATION*/
+.log-in {
+    padding: 1em 2em;
+    border: 1px solid #a09eaa;
+}
+
+/*CART*/
+#navbarDropdown:hover {
+    cursor: pointer;
+}
+
+.cart-img {
+    height: 50px;
+    width:50px;
+}
+
+ul.dropdown-cart {
+    min-width: 250px;
+}
+
+ul.dropdown-cart li .item {
+    display: block;
+    padding: 3px 10px;
+    margin: 3px 0;
+}
+
+ul.dropdown-cart li .item:hover {
+    background-color: #f3f3f3;
+}
+
+ul.dropdown-cart li .item:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+ul.dropdown-cart li .item-left {
+    float: left;
+}
+
+ul.dropdown-cart li .item-left img,
+ul.dropdown-cart li .item-left span.item-info {
+    float: left;
+}
+
+ul.dropdown-cart li .item-left span.item-info {
+    margin-left: 10px;
+}
+
+ul.dropdown-cart li .item-left span.item-info span {
+    display: block;
+}
+
+ul.dropdown-cart li .item-right {
+    float: right;
+}
+
+ul.dropdown-cart li .item-right button {
+    margin-top: 14px;
+}

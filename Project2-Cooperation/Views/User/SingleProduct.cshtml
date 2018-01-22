@@ -1,0 +1,35 @@
+﻿@model CartItem
+@{
+    ViewData["Title"] = "Product";
+}
+<div class="row mt-5">
+    <div class="col-md-5">
+        <img class="img-fluid img-thumbnail" src="@Model.Product.ImageUrl" alt="product_@Model.Product.Title" />
+    </div>
+    <div class="col-md-7 pl-md-4">
+        <h1>@Model.Product.Title</h1>
+        <p class="mt-3">@Model.Product.ShortDescription</p>
+        <p class="mt-3 text-center">
+            <span class="display-4 p-5">@Model.Product.SalePrice.ToString("C")</span>
+        </p>
+        <p class="text-center">
+            <span>Qty: </span>
+            <span>
+                <input type="number" style="width: 45px;" />
+            </span>
+        </p>
+        <p class="mt-4 text-center">
+            <span><button class="btn btn-outline-info">Add to wishlist</button></span>
+            <span><a class="btn btn-primary" asp-route-id="@Model.Product.ProductId" asp-route-qty="@Model.Quantity" asp-action="AddToCart" asp-controller="Cart">Add to cart</a></span>
+        </p>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col mt-5">
+        <h4>Product Description</h4>
+        <p>@Model.Product.Description</p>
+    </div>
+</div>
+
+

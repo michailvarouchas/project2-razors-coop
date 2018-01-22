@@ -1,0 +1,147 @@
+﻿@model ViewOrdersViewModel
+@{
+    ViewData["Title"] = "View Orders";
+    Layout = "_AdminLayout";
+}
+@if (ViewData["filter"] == null)
+{
+    <h1 class="text-center" style="font-size: 1.6em;">All orders</h1>
+}
+else
+{
+    <h1 class="text-center" style="font-size: 1.6em;">@ViewData["filter"]</h1>
+
+}
+<hr />
+<div class="collapse" id="filterToggler">
+    <div class="row">
+        <div class="bg-white p-1 col-md-4">
+            <h5 class="text-dark">Filter by date</h5>
+            <form asp-action="FilterByDate" method="post" class="mt-3">
+                <input type="date" asp-for="DateStart" />
+                <input type="date" asp-for="DateEnd" /><br />
+                <button class="btn btn-sm btn-outline-primary mt-1" type="submit">Date Filter</button>
+            </form>
+        </div>
+        <div class="bg-white p-1 m-auto col-md-4">
+            <h5 class="text-dark">Filter by phone</h5>
+            <form asp-action="FilterByPhone" method="post" class="mt-3">
+                <input type="text" asp-for="Phone" /><br />
+                <button class="btn btn-sm btn-outline-primary mt-1" type="submit">Phone Filter</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<nav class="navbar navbar-light bg-white mt-1">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterToggler" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-filter"></span>
+    </button>
+</nav>
+
+@if (Model.Orders.Count() != 0)
+{
+    <div class="row mt-3">
+        <h5 class="col-2">Order from</h5>
+        <h5 class="col-2">Contact Phone</h5>
+        <h5 class="col-2">Order Total</h5>
+        <h5 class="col-2">Status</h5>
+        <h5 class="col-2">Placed On</h5>
+        <h5 class="col-2">Actions</h5>
+    </div>
+    <hr />
+    @foreach (var order in Model.Orders)
+    {
+        <div class="row">
+            <p class="col-2">@order.UserDetails.FirstName</p>
+            <p class="col-2">@order.UserDetails.Phone</p>
+            <p class="col-2">@order.Total.ToString("C")</p>
+            <p class="col-2">@(order.Completed ? "Completed" : "Pending")</p>
+            <p class="col-2">@order.Date</p>
+            <p class="col-2">
+                @if (order.Completed)
+                {
+                    <a asp-action="MarkAsPending" asp-route-id="@order.OrderId" title="Return to pending status"><i class="fa fa-clock-o pl-3"></i></a>
+
+                }
+                else
+                {
+                    <a asp-action="MarkAsCompleted" asp-route-id="@order.OrderId" title="Mark as completed"><i class="fa fa-check pl-3"></i></a>
+
+                }
+                <a asp-action="DeleteOrder" asp-route-id="@order.OrderId" title="Delete order"><i class="fa fa-trash pl-3"></i></a>
+                <a id="@order.OrderId" class="viewOrder" title="Order details" href="/"><i class="fa fa-info-circle pl-3"></i></a>
+            </p>
+        </div>
+
+        <div class="modal fade" id="modal_@order.OrderId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order #@order.OrderId</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>UserDetails</h5>
+                        <hr />
+                        <div class="row">
+                            <h6 class="col-6">FirstName</h6>
+                            <p class="col-6">@order.UserDetails.FirstName</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">LastName</h6>
+                            <p class="col-6">@order.UserDetails.LastName</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">City</h6>
+                            <p class="col-6">@order.UserDetails.City</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Address</h6>
+                            <p class="col-6">@order.UserDetails.Address</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Phone</h6>
+                            <p class="col-6">@order.UserDetails.Phone</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Zip</h6>
+                            <p class="col-6">@order.UserDetails.Zip</p>
+                        </div>
+                        <h5>Order Details</h5>
+                        <hr />
+                        <div class="row">
+                            <h6 class="col-6">Product</h6>
+                            <h6 class="col-3">Quantity</h6>
+                            <h6 class="col-3">Price</h6>
+                        </div>
+                        @foreach (var item in order.CartItems)
+                        {
+                            <div class="row">
+                                <p class="col-6">@item.Product.Title</p>
+                                <p class="col-3">@item.Quantity</p>
+                                <p class="col-3">@item.Product.SalePrice</p>
+                            </div>
+                        }
+                        <div class="row  bg-light">
+                            <h6 class="col-9">Totals: </h6>
+                            <h6 class="col-3">@order.Total</h6>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    <h4>There are no orders at the moment</h4>
+
+}

@@ -1,0 +1,46 @@
+﻿@model Cart
+@{
+    ViewData["Title"] = "Cart";
+}
+<div class="jumbotron jumbotron-fluid pt-2 pb-2 mt-2 mb-0 bg-white">
+    <div class="container">
+        <h1 class="display-4 text-center">My Cart</h1>
+    </div>
+</div>
+@if (Model.CartItems.Count != 0)
+{
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotals</th>
+        </tr>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td class="position-relative">
+                    @item.Quantity
+                    <a asp-action="RemoveFromCart" asp-route-id="@item.Product.ProductId" class="text-info"><i class="fa fa-sort-down bottom-right-cart-arrow"></i></a>
+                    <a asp-action="AddToCart" asp-route-id="@item.Product.ProductId" class="text-info"><i class="fa fa-sort-up top-right-cart-arrow"></i></a>
+                </td>
+                <td>@item.Product.SalePrice.ToString("C")</td>
+                <td>@item.Subtotals.ToString("C")</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3">Totals:</td>
+            <td>@Model.CalculateCartTotalCost.ToString("C")</td>
+        </tr>
+    </table>
+}
+else
+{
+    <h4>Your Cart is Empty</h4>
+
+}
+<a class="btn btn-primary btn-sm float-right ml-2" asp-action="CheckOut" asp-controller="Order">Check Out</a>
+<a class="btn btn-secondary btn-sm float-right" asp-action="Index" asp-controller="User">Back</a>
+<div class="clearfix"></div>
+

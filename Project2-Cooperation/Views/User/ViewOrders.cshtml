@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "My Orders";
+    Layout = "_Layout";
+}
+
+<h1 class="bg-light p-2 mt-3 mb-3 text-center rounded">My Orders</h1>
+@if (Model.Count() != 0)
+{
+    <div class="row">
+        <h5 class="col-3">Order from</h5>
+        <h5 class="col-3">Order Total</h5>
+        <h5 class="col-3">Status</h5>
+        <h5 class="col-3">Actions</h5>
+    </div>
+    <hr />
+    @foreach (var order in Model)
+    {
+        <div class="row">
+            <p class="col-3">@order.UserDetails.FirstName</p>
+            <p class="col-3">@order.Total.ToString("C")</p>
+            <p class="col-3">@(order.Completed ? "Completed" : "Pending")</p>
+            <p class="col-3">
+                <a id="@order.OrderId" class="viewOrder" title="Order details" href="/"><i class="fa fa-info-circle pl-3"></i></a>
+            </p>
+        </div>
+
+        <div class="modal fade" id="modal_@order.OrderId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order #@order.OrderId</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>User details</h5>
+                        <hr />
+                        <div class="row">
+                            <h6 class="col-6">First Name</h6>
+                            <p class="col-6">@order.UserDetails.FirstName</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Last Name</h6>
+                            <p class="col-6">@order.UserDetails.LastName</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">City</h6>
+                            <p class="col-6">@order.UserDetails.City</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Address</h6>
+                            <p class="col-6">@order.UserDetails.Address</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Phone</h6>
+                            <p class="col-6">@order.UserDetails.Phone</p>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-6">Postal Code</h6>
+                            <p class="col-6">@order.UserDetails.Zip</p>
+                        </div>
+                        <h5>Order details</h5>
+                        <hr />
+                        <div class="row">
+                            <h6 class="col-6">Product</h6>
+                            <h6 class="col-3">Quantity</h6>
+                            <h6 class="col-3">Price</h6>
+                        </div>
+                        @foreach (var item in order.CartItems)
+                        {
+                            <div class="row">
+                                <p class="col-6">@item.Product.Title</p>
+                                <p class="col-3">@item.Quantity</p>
+                                <p class="col-3">@item.Product.SalePrice</p>
+                            </div>
+                        }
+                        <div class="row  bg-light">
+                            <h6 class="col-9">Totals: </h6>
+                            <h6 class="col-3">@order.Total</h6>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    <h4>There are no orders at the moment</h4>
+
+}

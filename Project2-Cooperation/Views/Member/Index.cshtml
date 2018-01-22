@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+    Layout = "_MemberLayout";
+}
+<a class="btn-link" asp-action="CreateProduct">Add new</a>
+@if (Model != null)
+{
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Title</td>
+                <td>@product.SalePrice.ToString("C")</td>
+                <td>@product.Category</td>
+                <td>@(product.IsLive ? "Live" : "Pending")</td>
+                <td>
+                    @if (product.IsLive)
+                    {
+                        <i class="fa fa-ban" title="Edit is disabled"></i>
+                    }
+                    else
+                    {
+                        <a asp-action="EditProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
+                    }
+
+
+                </td>
+            </tr>
+
+        }
+    </table>
+}
+else
+{
+    <h4>There are no products available at the moment</h4>
+
+}
+
+
+

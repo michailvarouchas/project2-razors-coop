@@ -1,0 +1,21 @@
+﻿@model EditUserViewModel
+
+@{ 
+    ViewData["Title"] = "Edit User";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-6 m-auto">
+        <h5 class="text-center">@Model.User</h5>
+        <form asp-action="EditUser" method="post">
+            <input type="hidden" asp-for="User" />
+            <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect03" asp-for="Roles" asp-items="Model.AllRoles"></select>
+            </div>
+            <button class="btn btn-outline-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
