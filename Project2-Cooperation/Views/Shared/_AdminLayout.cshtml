@@ -21,14 +21,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-0 pb-0">
         <div class="container">
-            <a class="navbar-brand" href="#">Cooperation Logo</a>
+            <a class="navbar-brand" href="#">Admin Panel</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#IndexNavbar" aria-controls="IndexNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="IndexNavbar">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link pt-0 pb-0 active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link pt-0 pb-0" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="nav-item"><a class="nav-link pt-0 pb-0" asp-area="" asp-controller="User" asp-action="Index">Eshop</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")

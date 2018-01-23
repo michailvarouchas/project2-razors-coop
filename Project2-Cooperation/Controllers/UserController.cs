@@ -12,8 +12,8 @@ namespace Project2_Cooperation.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private IProductRepository _productsRepo;
-        private IOrderRepository _ordersRepo;
+        private readonly IProductRepository _productsRepo;
+        private readonly IOrderRepository _ordersRepo;
 
         public UserController(UserManager<ApplicationUser> userManager, IProductRepository repository, IOrderRepository ordersRepo, Cart cartService)
         {

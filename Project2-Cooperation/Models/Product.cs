@@ -43,6 +43,8 @@ namespace Project2_Cooperation.Models
         [Required]
         public string Category { get; set; }
 
+        public bool Featured { get; set; }
+
         public static async Task CopyImageToServer(Product product)
         {
             if (product.ImageFile != null && product.ImageFile.Length != 0)

@@ -5,14 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
+using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IProductRepository _productsRepo;
+
+        public HomeController(IProductRepository repository, IOrderRepository ordersRepo)
+        {
+            _productsRepo = repository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var featured = _productsRepo.Products.Where(p => p.Featured == true).Take(6);
+            return View(featured);
         }
 
         public IActionResult About()
