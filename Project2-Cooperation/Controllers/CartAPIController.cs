@@ -46,17 +46,22 @@ namespace Project2_Cooperation.Controllers
         [HttpDelete]
         public Product Delete([FromBody]string prodId)
         {
-            var id = Int32.Parse(prodId);
+            if (prodId != null)
+            {
+                var id = Int32.Parse(prodId);
 
-            var cartItemToRemove = _cart.CartItems.SingleOrDefault(ci => ci.Product.ProductId == id);
+                var cartItemToRemove = _cart.CartItems.SingleOrDefault(ci => ci.Product.ProductId == id);
 
-            var prodToRemove = cartItemToRemove.Product;
+                var prodToRemove = cartItemToRemove.Product;
 
-            var quantity = cartItemToRemove.Quantity;
+                var quantity = cartItemToRemove.Quantity;
 
-            _cart.RemoveFromCart(prodToRemove, quantity);
+                _cart.RemoveFromCart(prodToRemove, quantity);
 
-            return prodToRemove;
+                return prodToRemove;
+            }
+            return null;
+            
         }
     }
 }

@@ -231,3 +231,8 @@ ul.dropdown-cart li .item-right button {
         color: lightgray;
     }
 }
+
+.cart-button-text {
+    font-size: 0.9em!important;
+    padding-top: 0.2em;
+}

@@ -82,20 +82,22 @@ var addButtons = () => {
     var buttons = document.createElement('li');
 
     var buttonsa1 = document.createElement('a');
-    buttonsa1.className = 'text-center pull-left pt-2 pb-1 ml-3 btn btn-xs btn-secondary';
+    buttonsa1.className = 'text-center pull-left pt-2 pb-1 ml-3 btn btn-sm btn-secondary';
     buttonsa1.setAttribute('href', '/cart');
     buttons.appendChild(buttonsa1);
 
     var buttonsa1h6 = document.createElement('h6');
+    buttonsa1h6.className = 'cart-button-text';
     buttonsa1h6.innerHTML = 'View Cart';
     buttonsa1.appendChild(buttonsa1h6);
 
     var buttonsa2 = document.createElement('a');
-    buttonsa2.className = 'text-center pull-right pt-2 pb-1 mr-3 btn btn-xs btn-primary';
+    buttonsa2.className = 'text-center pull-right pt-2 pb-1 mr-3 btn btn-sm btn-primary';
     buttonsa2.setAttribute('href', '/order/checkout');
     buttons.appendChild(buttonsa2);
 
     var buttonsa2h6 = document.createElement('h6');
+    buttonsa2h6.className = 'cart-button-text';
     buttonsa2h6.innerHTML = 'Check Out';
     buttonsa2.appendChild(buttonsa2h6);
 
@@ -130,7 +132,7 @@ var cartHtml = (item, productId) => {
     cartItemSpan.appendChild(cartItemSpanRight);
 
     var cartItemRemoveHtml = document.createElement('a');
-    cartItemRemoveHtml.className = 'btn btn-xs pull-right';
+    cartItemRemoveHtml.className = 'btn btn-sm pull-right';
     cartItemRemoveHtml.setAttribute('product-id', item.productId);
     cartItemSpanRight.appendChild(cartItemRemoveHtml);
 
