@@ -52,7 +52,7 @@
                                 }
                                 @if (User.IsInRole("User") || User.IsInRole("Member") || User.IsInRole("SuperAdmin"))
                                 {
-                                    <a asp-controller="Cart" asp-action="AddToWishList" asp-route-id="@product.ProductId" class="top-left text-dark overlay-text">
+                                    <a w-id="@product.ProductId" class="top-left text-dark overlay-text add-to-wishlist">
                                         <i class="fa fa-heart-o"></i>
                                     </a>
 

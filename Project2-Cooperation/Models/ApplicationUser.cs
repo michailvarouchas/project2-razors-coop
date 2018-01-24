@@ -16,6 +16,8 @@ namespace Project2_Cooperation.Models
 
         public virtual IEnumerable<Product> Products { get; set; }
 
+        public virtual WishList Wishlist { get; set; }
+
         public ApplicationUser() : base()
         {
         }

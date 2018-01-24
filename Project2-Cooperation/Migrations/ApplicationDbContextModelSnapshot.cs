@@ -190,11 +190,15 @@ namespace Project2Cooperation.Migrations
 
                     b.Property<int>("Quantity");
 
+                    b.Property<string>("WishListApplicationUserId");
+
                     b.HasKey("CartItemId");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("WishListApplicationUserId");
 
                     b.ToTable("CartItem");
                 });
@@ -299,6 +303,17 @@ namespace Project2Cooperation.Migrations
                     b.ToTable("UserDetails");
                 });
 
+            modelBuilder.Entity("Project2_Cooperation.Models.WishList", b =>
+                {
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.HasKey("ApplicationUserId");
+
+                    b.ToTable("Whishlist");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -354,6 +369,10 @@ namespace Project2Cooperation.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project2_Cooperation.Models.WishList")
+                        .WithMany("WishListItems")
+                        .HasForeignKey("WishListApplicationUserId");
                 });
 
             modelBuilder.Entity("Project2_Cooperation.Models.InternalAccount", b =>
@@ -385,6 +404,14 @@ namespace Project2Cooperation.Migrations
                     b.HasOne("Project2_Cooperation.Models.ApplicationUser", "ApplicationUser")
                         .WithOne("UserDetails")
                         .HasForeignKey("Project2_Cooperation.Models.UserDetails", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Project2_Cooperation.Models.WishList", b =>
+                {
+                    b.HasOne("Project2_Cooperation.Models.ApplicationUser", "ApplicationUser")
+                        .WithOne("Wishlist")
+                        .HasForeignKey("Project2_Cooperation.Models.WishList", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

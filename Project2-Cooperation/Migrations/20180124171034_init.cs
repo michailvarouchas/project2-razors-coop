@@ -182,6 +182,7 @@ namespace Project2Cooperation.Migrations
                     BuyPrice = table.Column<decimal>(nullable: false),
                     Category = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
+                    Featured = table.Column<bool>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
                     IsLive = table.Column<bool>(nullable: false),
                     MemberId = table.Column<string>(nullable: false),
@@ -225,6 +226,24 @@ namespace Project2Cooperation.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Whishlist",
+                columns: table => new
+                {
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Whishlist", x => x.ApplicationUserId);
+                    table.ForeignKey(
+                        name: "FK_Whishlist_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -255,7 +274,8 @@ namespace Project2Cooperation.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderId = table.Column<int>(nullable: true),
                     ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    WishListApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -272,6 +292,12 @@ namespace Project2Cooperation.Migrations
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItem_Whishlist_WishListApplicationUserId",
+                        column: x => x.WishListApplicationUserId,
+                        principalTable: "Whishlist",
+                        principalColumn: "ApplicationUserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,6 +350,11 @@ namespace Project2Cooperation.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartItem_WishListApplicationUserId",
+                table: "CartItem",
+                column: "WishListApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserDetailsApplicationUserId",
                 table: "Orders",
                 column: "UserDetailsApplicationUserId");
@@ -365,6 +396,9 @@ namespace Project2Cooperation.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Whishlist");
 
             migrationBuilder.DropTable(
                 name: "UserDetails");

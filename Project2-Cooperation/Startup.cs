@@ -40,6 +40,7 @@ namespace Project2_Cooperation
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddTransient<IUserDetailsRepository, EFUserDetailsRepository>();
+            services.AddTransient<IWishListRepository, EFWishListRepository>();
 
             services.AddScoped<Cart>(sp => SessionCart.GetSessionCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -77,7 +78,7 @@ namespace Project2_Cooperation
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             //SeedUsers.EnsurePopulated(app);
-            //SeedProducts.EnsurePopulated(app);
+            SeedProducts.EnsurePopulated(app);
             
         }
         

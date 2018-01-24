@@ -15,3 +15,25 @@ $('#imageInput').change(function (event) {
     $('#imagePreview').fadeIn("fast").attr('src', tmppath);
 });
 
+//WISHLIST API
+var ajaxAddToWishList = (productId) => {
+    $.ajax({
+        url: '/api/wishlist',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: productId
+    }).done((prod) => {
+        //console.log(product);
+        //on success ...
+    });
+};
+
+var addToWishListList = document.querySelectorAll('.add-to-wishlist');
+addToWishListList.forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+        var prodId = e.target.parentElement.getAttribute('w-id');
+        console.log(prodId);
+        ajaxAddToWishList(prodId);
+    });
+});
