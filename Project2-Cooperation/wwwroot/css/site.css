@@ -226,13 +226,39 @@ ul.dropdown-cart li .item-right button {
     margin-top: 14px;
 }
 
-@media (min-width: 992px){
-    #mainNav .navbar-nav > li.nav-item > a.nav-link, #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
-        color: lightgray;
-    }
+
+.bg-light-transaparent {
+    background-color: rgba(160, 158, 170, 0.49);
 }
 
 .cart-button-text {
     font-size: 0.9em!important;
     padding-top: 0.2em;
+}
+
+.skip-static-nav {
+    margin-top: 70px!important;
+}
+
+@media (min-width: 992px) {
+    #mainNav .navbar-brand,
+    #mainNav .navbar-nav > li.nav-item > a.nav-link, #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
+        color: darkslategrey;
+    }
+
+        #mainNav .navbar-brand:hover, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover, #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+            color: black;
+        }
+
+    #mainNav {
+        background-color: rgba(160, 158, 170, 0.49);
+    }
+
+    #cartItems {
+        left: -148px;
+    }
+}
+
+#static-footer-fix {
+    height: 70px!important;
 }
