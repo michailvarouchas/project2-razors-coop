@@ -1,0 +1,40 @@
+﻿@model WishList
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
+<div class="jumbotron jumbotron-fluid pt-2 pb-2 mt-2 mb-0 bg-white skip-static-nav">
+    <div class="container">
+        <h1 class="display-4 text-center">My Wishlist</h1>
+    </div>
+</div>
+@if (Model != null && Model.WishListItems.Count() != 0)
+{
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+        @foreach (var item in Model.WishListItems)
+        {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td class="position-relative">
+                    @item.Quantity
+                    <a asp-action="RemoveFromWishList" asp-route-id="@item.ProductId" class="text-info"><i class="fa fa-sort-down bottom-right-cart-arrow"></i></a>
+                    <a asp-action="AddToWishList" asp-route-id="@item.ProductId" class="text-info"><i class="fa fa-sort-up top-right-cart-arrow"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h4>Your WishList is Empty</h4>
+
+}
+<a class="btn btn-secondary btn-sm float-right" asp-action="Index" asp-controller="User">Back</a>
+<div class="clearfix"></div>
+
+
+

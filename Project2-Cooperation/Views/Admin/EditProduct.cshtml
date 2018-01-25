@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit Product";
     Layout = "_AdminLayout";
 }
-<h1 class="text-center">@ViewData["Title"]</h1>
+<h1 class="text-center skip-static-nav">@ViewData["Title"]</h1>
 <form class="mt-4" asp-action="EditProduct" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="ProductId" />
     <input type="hidden" asp-for="MemberId" />

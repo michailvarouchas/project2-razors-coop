@@ -33,7 +33,6 @@ var addToWishListList = document.querySelectorAll('.add-to-wishlist');
 addToWishListList.forEach((elem) => {
     elem.addEventListener('click', (e) => {
         var prodId = e.target.parentElement.getAttribute('w-id');
-        console.log(prodId);
         ajaxAddToWishList(prodId);
     });
 });

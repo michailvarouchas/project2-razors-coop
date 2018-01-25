@@ -17,13 +17,31 @@ namespace Project2_Cooperation.Services
             _db = db;
         }
 
-        public IQueryable<WishList> WishLists => _db.Whishlist;
+        public IQueryable<WishList> AllWishLists => _db.Whishlist.Include(w => w.WishListItems);
 
         public void AddToWishList(int productId, string userId, int quantity)
         {
             var wishList = _db.Whishlist.Include(w => w.WishListItems).SingleOrDefault(w => w.ApplicationUserId == userId);
 
-            //create wishList item from productId and quantity
+            //TODO --> check if productid exists
+
+            UpdateOrAdd(wishList, productId, quantity, userId);
+
+            _db.SaveChanges();
+        }
+
+        public void RemoveFromWishList(int productId, string userId, int quantity)
+        {
+            var wishList = _db.Whishlist.Include(w => w.WishListItems).SingleOrDefault(w => w.ApplicationUserId == userId);
+
+            RemoveItemOrDecreaseQuantity(wishList, productId, quantity);
+
+            _db.SaveChanges();
+        }
+
+        //helpers
+        private void UpdateOrAdd(WishList wishList, int productId, int quantity, string userId)
+        {
             var wishListItem = new CartItem
             {
                 ProductId = productId,
@@ -32,40 +50,73 @@ namespace Project2_Cooperation.Services
 
             if (wishList != null)
             {
-                bool isNotAlreadyIn = true;
-
-                foreach (var item in wishList.WishListItems)
-                {
-                    if (item.ProductId == productId)
-                    {
-                        item.Quantity += quantity;
-                        isNotAlreadyIn &= false;
-                    }
-                }
-                if (isNotAlreadyIn)
-                {
-                    wishList.WishListItems.Add(wishListItem);
-                }
-
-                _db.Whishlist.Update(wishList);
+                //increase quantity or add new wishListItem
+                AddNewItemOrIncreaseQuantity(wishList, productId, quantity, wishListItem);
             }
             else
             {
-                wishList = new WishList
-                {
-                    WishListItems = new List<CartItem>()
-                };
-                wishList.WishListItems.Add(wishListItem);
-                wishList.Date = DateTime.Now;
-                wishList.ApplicationUserId = userId;
-                _db.Whishlist.Add(wishList);
+                CreateNewWishList(wishList, wishListItem, userId);
             }
-            _db.SaveChanges();
         }
 
-        public void RemoveFromWishList(int productId, string userId, int quantity)
+        private void CreateNewWishList(WishList wishList, CartItem wishListItem, string userId)
         {
-            throw new NotImplementedException();
+            wishList = new WishList
+            {
+                WishListItems = new List<CartItem>()
+            };
+            wishList.WishListItems.Add(wishListItem);
+            wishList.Date = DateTime.Now;
+            wishList.ApplicationUserId = userId;
+            _db.Whishlist.Add(wishList);
+        }
+
+        private void AddNewItemOrIncreaseQuantity(WishList wishList, int productId, int quantity, CartItem wishListItem)
+        {
+            wishList.Date = DateTime.Now;
+
+            bool isNotAlreadyIn = true;
+
+            foreach (var item in wishList.WishListItems)
+            {
+                if (item.ProductId == productId)
+                {
+                    item.Quantity += quantity;
+                    isNotAlreadyIn &= false;
+                }
+            }
+            if (isNotAlreadyIn)
+            {
+                wishList.WishListItems.Add(wishListItem);
+            }
+
+            _db.Whishlist.Update(wishList);
+        }
+
+        private void RemoveItemOrDecreaseQuantity(WishList wishList, int productId, int quantity)
+        {
+            wishList.Date = DateTime.Now;
+
+            CartItem cartItemToRemove = new CartItem();
+
+            foreach (var item in wishList.WishListItems)
+            {
+                if (item.ProductId == productId)
+                {
+                    item.Quantity -= quantity;
+                    if (item.Quantity == 0 )
+                    {
+                        cartItemToRemove = item;
+                    }
+                    
+                }
+            }
+            if (cartItemToRemove != null)
+            {
+                wishList.WishListItems.Remove(cartItemToRemove);
+            }
+
+            _db.Whishlist.Update(wishList);
         }
     }
 }

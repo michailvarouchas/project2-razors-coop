@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Product>
+﻿@model EshopIndexViewModel
 
 @{
     ViewData["Title"] = "Eshop";
@@ -13,16 +13,26 @@
 <hr />
 
 <div class="row mt-4">
-    <div class="col-md-2">
-        <div class="alert alert-danger" role="alert">
-            Add button to: View all, view by category
-        </div>
-    </div>
-    <div class="col-md-10">
-        @if (Model != null)
+    
+    <ul class="nav flex-column col-md-3 text-center h-menu">
+        <li class="nav-item">
+            <h5 class="text-uppercase pb-1" style="text-decoration:underline;">Select category</h5>
+        </li>
+        <li class="nav-item h-menu-item">
+            <a asp-action="Index" class="nav-link h-menu-item @(Model.Category == null ? "active" : "")">All</a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-route-category="Category1" class="nav-link h-menu-item @(Model.Category == "Category1" ? "active" : "")">Category1</a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-route-category="Category2" class="nav-link h-menu-item @(Model.Category == "Category2" ? "active" : "")">Category2</a>
+        </li>
+    </ul>
+    <div class="col-md-9">
+        @if (Model.Products != null)
         {
             <div class="row">
-                @foreach (var product in Model)
+                @foreach (var product in Model.Products)
                 {
                     <div class="col-md-4 col-sm-6 position-relative product mb-3">
                         <div class="card" style="height: 100%;">
@@ -52,7 +62,7 @@
                                 }
                                 @if (User.IsInRole("User") || User.IsInRole("Member") || User.IsInRole("SuperAdmin"))
                                 {
-                                    <a w-id="@product.ProductId" class="top-left text-dark overlay-text add-to-wishlist">
+                                    <a asp-route-id="@product.ProductId" asp-action="AddToWishList" asp-controller="WishList" class="top-left text-dark overlay-text add-to-wishlist">
                                         <i class="fa fa-heart-o"></i>
                                     </a>
 

@@ -9,8 +9,6 @@ using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
-    [Route("api/wishlist")]
-    [Produces("application/json")]
     public class WishListController : Controller
     {
         private IProductRepository _productRepo;
@@ -24,23 +22,45 @@ namespace Project2_Cooperation.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
-        public Product Post([FromBody] string prodId, int qty = 1)
+        [HttpGet]
+        public IActionResult AddToWishList(int id, int qty = 1)
         {
-            if (prodId != null)
+            var userId = _userManager.GetUserId(User);
+
+            _wishListRepo.AddToWishList(id, userId, qty);
+
+            var product = _productRepo.Products.SingleOrDefault(p => p.ProductId == id);
+
+            TempData["message"] = $"Product {product.Title} added to your wishlist!";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult RemoveFromWishList(int id, int qty = 1)
+        {
+            var userId = _userManager.GetUserId(User);
+
+            _wishListRepo.RemoveFromWishList(id, userId, qty);
+
+            var product = _productRepo.Products.SingleOrDefault(p => p.ProductId == id);
+
+            TempData["message"] = $"Product {product.Title} removed from your wishlist!";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var userWishlist = _wishListRepo.AllWishLists.SingleOrDefault(u => u.ApplicationUserId == _userManager.GetUserId(User));
+
+            foreach (var item in userWishlist.WishListItems)
             {
-                bool res = int.TryParse(prodId, out int productId);
-
-                var userId = _userManager.GetUserId(User);
-
-                _wishListRepo.AddToWishList(productId, userId, qty);
-
-                var product = _productRepo.Products.SingleOrDefault(p => p.ProductId == productId);
-
-                return product;
+                item.Product = _productRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
             }
 
-            return null;
+            return View(userWishlist);
         }
     }
 }

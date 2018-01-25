@@ -8,6 +8,7 @@ namespace Project2_Cooperation.Services
 {
     public interface IWishListRepository
     {
+        IQueryable<WishList> AllWishLists { get; }
         void AddToWishList(int productId, string userId, int quantity);
         void RemoveFromWishList(int productId, string userId, int quantity);
     }

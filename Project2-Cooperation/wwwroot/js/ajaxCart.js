@@ -1,4 +1,5 @@
 ﻿//ajax cart
+
 var ajaxAddToCart = (prodId) => {
     $.ajax({
         url: '/api/cart',
@@ -46,6 +47,7 @@ var ajaxGetCart = () => {
     }).done((cart) => {
         //on success ...
         var total = 0.00;
+        var shopCart = [];
         cart.cartItems.forEach((item) => {
             cartHtml(item);
             total += item.product.salePrice * item.quantity;
@@ -56,6 +58,7 @@ var ajaxGetCart = () => {
         else {
             emptyCart();
         }
+        console.log(shopCart);
         document.getElementById('cartCount').innerHTML = total.toFixed(2) + " &euro;";
     });
 };
@@ -110,7 +113,7 @@ var addButtons = () => {
     layout.appendChild(clearfix);
 };
 
-var cartHtml = (item, productId) => {
+var cartHtml = (item) => {
 
     var cartItem = document.createElement('li');
     cartItems.appendChild(cartItem);
@@ -133,7 +136,7 @@ var cartHtml = (item, productId) => {
 
     var cartItemRemoveHtml = document.createElement('a');
     cartItemRemoveHtml.className = 'btn btn-sm pull-right';
-    cartItemRemoveHtml.setAttribute('product-id', item.productId);
+    cartItemRemoveHtml.setAttribute('product-id', item.product.productId);
     cartItemSpanRight.appendChild(cartItemRemoveHtml);
 
     var cartItemRemoveIcon = document.createElement('i');
@@ -178,3 +181,4 @@ eventlist.forEach((elem) => {
 });
 
 ajaxGetCart();
+

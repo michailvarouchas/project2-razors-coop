@@ -42,10 +42,11 @@
 }
 
 .portfolio-box {
-    height: 17em;
+    height: 15em;
     object-fit: cover;
     overflow: hidden;
 }
+
 
 .card-title {
     height: 2.8rem;
@@ -261,4 +262,25 @@ ul.dropdown-cart li .item-right button {
 
 #static-footer-fix {
     height: 70px!important;
+}
+
+/*SHOP SIDEBAR*/
+.h-menu{
+    height:auto;
+}
+
+.h-menu-item {
+    color: #7c7c7d;
+}
+
+.h-menu-item:hover {
+    border-radius: 0.1em;
+    background-color: #7c7c7d;
+    color: white;
+}
+
+.active {
+    border-radius: 0.1em;
+    border: 1px solid #7c7c7d;
+    color: #7c7c7d;
 }

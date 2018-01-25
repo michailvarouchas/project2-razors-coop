@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
+using Project2_Cooperation.Models.EshopViewModels;
 using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
@@ -22,9 +23,21 @@ namespace Project2_Cooperation.Controllers
             _ordersRepo = ordersRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string category)
         {
-            return View(_productsRepo.Products.Where(p => p.IsLive == true));
+            if (category != null)
+            {
+                var products = _productsRepo.Products.Where(p => p.IsLive == true && p.Category == category);
+
+                return View(new EshopIndexViewModel { Products=products, Category = category});
+            }
+            else
+            {
+                var products = _productsRepo.Products.Where(p => p.IsLive == true);
+
+                return View(new EshopIndexViewModel { Products = products, Category = null });
+            }
+            
         }
 
         public IActionResult SingleProduct(int id)

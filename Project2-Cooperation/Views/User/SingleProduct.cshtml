@@ -21,7 +21,7 @@
                 </span>
             </p>
             <p class="mt-4 text-center">
-                <span><a class="btn btn-outline-info">Add to wishlist</a></span>
+                <span><a asp-controller="WishList" asp-action="AddToWishList" asp-route-id="@Model.Product.ProductId" class="btn btn-outline-info">Add to wishlist</a></span>
                 <span><button type="submit" class="btn btn-primary">Add to cart</button></span>
             </p>
         </form>
