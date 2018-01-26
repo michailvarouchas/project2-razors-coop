@@ -54,13 +54,21 @@ namespace Project2_Cooperation.Controllers
         public IActionResult Index()
         {
             var userWishlist = _wishListRepo.AllWishLists.SingleOrDefault(u => u.ApplicationUserId == _userManager.GetUserId(User));
-
-            foreach (var item in userWishlist.WishListItems)
+            if (userWishlist != null)
             {
-                item.Product = _productRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+                foreach (var item in userWishlist.WishListItems)
+                {
+                    item.Product = _productRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+                }
+                return View(userWishlist);
             }
+            else
+            {
+                return View(userWishlist);
+            }
+            
 
-            return View(userWishlist);
+            
         }
     }
 }
