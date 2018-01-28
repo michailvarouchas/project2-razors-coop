@@ -17,15 +17,13 @@ namespace Project_Cooperation.Services
             _db = db;
         }
 
-        public void AdminBuy(ApplicationUser member, decimal ammount)
-        {
-            var admin = _db.Users.SingleOrDefault(i => i.Email == "admin@afdemp.gr");
-            var adminaccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == admin.Id);
-            var memberaccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == member.Id);
-            memberaccount.Balance += ammount;
-            adminaccount.Balance -= ammount;
+        public void AdminBuy(string adminId, ApplicationUser member, decimal ammount)
+        {           
+            var adminAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == adminId);
+            var memberAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == member.Id);
+            memberAccount.Balance += ammount;
+            adminAccount.Balance -= ammount;
             _db.SaveChanges();
-
         }
         
         public void TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount)
@@ -35,29 +33,20 @@ namespace Project_Cooperation.Services
             userAccount.Balance -= ammount;
             var adminAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == adminId);
             adminAccount.Balance += ammount / 2;
-
-            var membersaccounts = new List<InternalAccount>();
-            var rest = new List<InternalAccount>();
+            
+            var membersAccounts = new List<InternalAccount>();
 
             foreach (var item in members)
             {
-                var memberaccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == item.Id);
-                if (memberaccount != null)
-                {
-                    membersaccounts.Add(memberaccount);
-                }
-                else
-                {
-                    rest.Add(memberaccount);
-                }
+                var membersAccount = _db.InternalAccounts.FirstOrDefault(i => i.ApplicationUserId == item.Id);
+                membersAccounts.Add(membersAccount);            
             }
 
-            foreach (var item in membersaccounts)
+            foreach (var item in membersAccounts)
             {
-                item.Balance += (ammount / 2) / membersaccounts.Count;
+                item.Balance += (ammount / 2) / membersAccounts.Count;
             }
            
-
             _db.SaveChanges();
         }
 
