@@ -19,13 +19,13 @@
             <h5 class="text-uppercase pb-1" style="text-decoration:underline;">Select category</h5>
         </li>
         <li class="nav-item h-menu-item">
-            <a asp-action="Index" class="nav-link h-menu-item @(Model.Category == null ? "active" : "")">All</a>
+            <a asp-action="Index" class="nav-link h-menu-item @(Model.Category == null ? "active-category" : "")">All</a>
         </li>
         <li class="nav-item">
-            <a asp-action="Index" asp-route-category="Category1" class="nav-link h-menu-item @(Model.Category == "Category1" ? "active" : "")">Category1</a>
+            <a asp-action="Index" asp-route-category="Category1" class="nav-link h-menu-item @(Model.Category == "Category1" ? "active-category" : "")">Category1</a>
         </li>
         <li class="nav-item">
-            <a asp-action="Index" asp-route-category="Category2" class="nav-link h-menu-item @(Model.Category == "Category2" ? "active" : "")">Category2</a>
+            <a asp-action="Index" asp-route-category="Category2" class="nav-link h-menu-item @(Model.Category == "Category2" ? "active-category" : "")">Category2</a>
         </li>
     </ul>
     <div class="col-md-9">

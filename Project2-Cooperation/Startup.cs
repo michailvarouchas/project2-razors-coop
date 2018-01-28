@@ -13,6 +13,7 @@ using Project2_Cooperation.Models;
 using Project2_Cooperation.Services;
 using Microsoft.AspNetCore.Http;
 using Project2_Cooperation.Models.SeedData;
+using Project_Cooperation.Services;
 
 namespace Project2_Cooperation
 {
@@ -34,13 +35,13 @@ namespace Project2_Cooperation
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddTransient<IUserDetailsRepository, EFUserDetailsRepository>();
             services.AddTransient<IWishListRepository, EFWishListRepository>();
+            services.AddTransient<ITransactionRepository, EFTransactionRepository>();
 
             services.AddScoped<Cart>(sp => SessionCart.GetSessionCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

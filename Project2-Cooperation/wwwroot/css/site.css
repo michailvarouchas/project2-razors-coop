@@ -279,8 +279,13 @@ ul.dropdown-cart li .item-right button {
     color: white;
 }
 
-.active {
+.active-category {
     border-radius: 0.1em;
     border: 1px solid #7c7c7d;
     color: #7c7c7d;
+}
+.admin-activetab {
+    color:black;
+    text-decoration:underline;
+    font-size:1.2em;
 }

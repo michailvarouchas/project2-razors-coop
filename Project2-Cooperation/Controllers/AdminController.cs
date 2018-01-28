@@ -27,6 +27,7 @@ namespace Project2_Cooperation.Controllers
 
         public IActionResult Index()
         {
+            ViewData["currenttab"] = "products";
             return View(_productsRepo.Products.Include(p => p.Member));
         }
 
@@ -42,8 +43,9 @@ namespace Project2_Cooperation.Controllers
                     item.Product = _ordersRepo.GetCartItemProduct(item);
                 }
             }
-
+            ViewData["currenttab"] = "orders";
             return View(new ViewOrdersViewModel() { Orders = orders });
+
         }
 
         [HttpPost]
@@ -174,6 +176,7 @@ namespace Project2_Cooperation.Controllers
 
                 vm.Add(new ViewUsersViewModel { User = user.Email, Roles = roles.ToList()});
             }
+            ViewData["currenttab"] = "users";
             return View(vm);
         }
 

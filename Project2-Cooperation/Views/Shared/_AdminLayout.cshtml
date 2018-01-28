@@ -38,16 +38,16 @@
     <div class="container">
         <ul class="nav justify-content-around mt-2">
             <li class="nav-item">
-                <a class="nav-link text-uppercase active" asp-controller="Admin" asp-action="Index">Products</a>
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "products"? "admin-activetab":"")" asp-controller="Admin" asp-action="Index">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase" asp-controller="Admin" asp-action="ViewOrders">Orders</a>
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "orders"? "admin-activetab":"")" asp-controller="Admin" asp-action="ViewOrders">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase" href="#">Sales</a>
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "sales"? "admin-activetab":"")" href="#">Sales</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase" asp-action="ViewUsers">Users</a>
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "users"? "admin-activetab":"")" asp-action="ViewUsers">Users</a>
             </li>
         </ul>
     </div>

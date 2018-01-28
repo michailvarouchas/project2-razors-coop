@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
 using Project2_Cooperation.Models.EshopViewModels;
 using Project2_Cooperation.Services;
+using System.Collections;
 
 namespace Project2_Cooperation.Controllers
 {
@@ -18,14 +19,17 @@ namespace Project2_Cooperation.Controllers
         private IOrderRepository _ordersRepo;
         private IProductRepository _productsRepo;
         private IUserDetailsRepository _userDetailsRepo;
+        private ITransactionRepository _transactionRepository;
         private Cart _cart;
 
-        public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository ordersRepo, IProductRepository productsRepo, IUserDetailsRepository userDetailsRepo, Cart cartService)
+        public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository ordersRepo,
+            IProductRepository productsRepo, IUserDetailsRepository userDetailsRepo, ITransactionRepository transactionRepository, Cart cartService)
         {
             _userDetailsRepo = userDetailsRepo;
             _userManager = userManager;
             _ordersRepo = ordersRepo;
             _productsRepo = productsRepo;
+            _transactionRepository = transactionRepository;
             _cart = cartService;
         }
 
@@ -46,7 +50,7 @@ namespace Project2_Cooperation.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckOut(CheckOutViewModel checkOut)
+        public async Task <IActionResult> CheckOut(CheckOutViewModel checkOut)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +94,8 @@ namespace Project2_Cooperation.Controllers
                     return View(checkOut);
                 }
 
-                //add transaction
+                
+
                 if (checkOut.Order.CartItems.Count() != 0)
                 {
                     //reduce product stock
@@ -100,7 +105,14 @@ namespace Project2_Cooperation.Controllers
                     }
 
                     _ordersRepo.CreateOrder(checkOut.Order);
+
+                    //add transaction
+                    var userId = _userManager.GetUserId(User);
+                    var admin = await _userManager.FindByEmailAsync("admin@afdemp.gr");
+                    var adminId = admin.Id;
                     
+                    var members = await GetMembers();
+                    _transactionRepository.TransactionCheckout(adminId, userId, members, checkOut.Order.Total);
                     return RedirectToAction(nameof(Completed));
                 }
                 TempData["failMessage"] = "Products in your cart are no longer available!";
@@ -116,6 +128,12 @@ namespace Project2_Cooperation.Controllers
             _cart.ClearCart();
 
             return View();
+        }
+
+        private async Task<IEnumerable<ApplicationUser>> GetMembers()
+        {
+            var members = await _userManager.GetUsersInRoleAsync("Member");
+            return members;
         }
 
         private void ReduceProductStock(CartItem ci)
