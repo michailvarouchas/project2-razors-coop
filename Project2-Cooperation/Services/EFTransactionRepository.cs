@@ -17,10 +17,10 @@ namespace Project_Cooperation.Services
             _db = db;
         }
 
-        public void AdminBuy(string adminId, ApplicationUser member, decimal ammount)
+        public void AdminBuy(string adminId, string memberId, decimal ammount)
         {           
             var adminAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == adminId);
-            var memberAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == member.Id);
+            var memberAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == memberId);
             memberAccount.Balance += ammount;
             adminAccount.Balance -= ammount;
             _db.SaveChanges();
