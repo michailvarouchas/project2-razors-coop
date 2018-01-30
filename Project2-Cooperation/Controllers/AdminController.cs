@@ -16,13 +16,15 @@ namespace Project2_Cooperation.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IProductRepository _productsRepo;
         private readonly IOrderRepository _ordersRepo;
+        private readonly ITransactionRepository _transactionRepository;
 
         public AdminController(UserManager<ApplicationUser> userManager, IProductRepository productsRepo, 
-            IOrderRepository ordersRepo)
+            IOrderRepository ordersRepo,ITransactionRepository transactionRepository)
         {
             _userManager = userManager;
             _productsRepo = productsRepo;
             _ordersRepo = ordersRepo;
+            _transactionRepository = transactionRepository;
         }
 
         public IActionResult Index()
@@ -218,5 +220,20 @@ namespace Project2_Cooperation.Controllers
 
             _productsRepo.UpdateProduct(productToUpdate);
         }
+
+        //Buy Products From Member
+        //public IActionResult BuyFromMember(int id)
+        //{
+        //    //var product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == id);
+        //    //product.BoughtFromAdmin = true;
+        //    //_productsRepo.UpdateProduct(product);
+
+        //    //missing transactions
+           
+        //    //_transactionRepository.AdminBuy(parameters);
+
+        //    return View();
+            
+        //}
     }
 }

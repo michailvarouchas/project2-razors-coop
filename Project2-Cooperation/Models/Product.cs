@@ -36,6 +36,8 @@ namespace Project2_Cooperation.Models
         public string ImageUrl { get; set; }
 
         public bool IsLive { get; set; }
+        
+        public bool BoughtFromAdmin { get; set; }
 
         [Required]
         public int Stock { get; set; }
