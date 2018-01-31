@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2_Cooperation.Models;
 using Project2_Cooperation.Models.EshopViewModels;
+using Project2_Cooperation.Models.ReportingViewModels;
 using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
@@ -19,14 +20,16 @@ namespace Project2_Cooperation.Controllers
         private readonly IProductRepository _productsRepo;
         private readonly IOrderRepository _ordersRepo;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IReportingRepository _reportingRepo;
 
         public AdminController(UserManager<ApplicationUser> userManager, IProductRepository productsRepo, 
-            IOrderRepository ordersRepo,ITransactionRepository transactionRepository)
+            IOrderRepository ordersRepo,ITransactionRepository transactionRepository, IReportingRepository reportingRepo)
         {
             _userManager = userManager;
             _productsRepo = productsRepo;
             _ordersRepo = ordersRepo;
             _transactionRepository = transactionRepository;
+            _reportingRepo = reportingRepo;
         }
 
         public IActionResult Index()
@@ -241,18 +244,20 @@ namespace Project2_Cooperation.Controllers
 
         public IActionResult Sales()
         {
-            var lastMonthOrders = _ordersRepo.GetOrders().Where(o => o.Date <= DateTime.Now && o.Date >= DateTime.Now.AddMonths(-1) && o.Completed);
-
-            decimal lastMonthSales = 0;
-
-            foreach (var item in lastMonthOrders)
-            {
-                lastMonthSales += item.Total;
-            }
-
+            
             ViewData["currenttab"] = "sales";
 
-            return View(lastMonthSales);
+            return View(new SalesViewModel {
+                SalesByProduct = _reportingRepo.TopSellingProducts(3),
+                SalesByCategory = _reportingRepo.SalesByCategory(3),
+                YearSalesByMonth = _reportingRepo.LastYearSalesByMonth(),
+                YearSales = _reportingRepo.LastYearSales(),
+                From = DateTime.Now.AddMonths(-11),
+                To = DateTime.Now
+
+            });
         }
+
+        
     }
 }

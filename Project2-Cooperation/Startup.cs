@@ -42,6 +42,7 @@ namespace Project2_Cooperation
             services.AddTransient<IUserDetailsRepository, EFUserDetailsRepository>();
             services.AddTransient<IWishListRepository, EFWishListRepository>();
             services.AddTransient<ITransactionRepository, EFTransactionRepository>();
+            services.AddTransient<IReportingRepository, EFReportingRepository>();
 
             services.AddScoped<Cart>(sp => SessionCart.GetSessionCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

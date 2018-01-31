@@ -1,4 +1,5 @@
 ﻿using Project2_Cooperation.Models;
+using Project2_Cooperation.Models.ReportingViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Project2_Cooperation.Services
 {
     public interface IReportingRepository
     {
-        decimal TotalRevenue(DateTime from, DateTime to);
-        decimal NetProfit(DateTime from, DateTime to);
-        decimal ProductRevenueToTotalRevenue(Product product, DateTime from, DateTime to);
-        decimal CategorySales(string category);
+        decimal LastYearSales();
+        List<decimal> LastYearSalesByMonth();
+        IQueryable<ProductSales> TopSellingProducts(int numberOfProducts);
+        IQueryable<CategorySales> SalesByCategory(int numberOfCategories);
     }
 }
