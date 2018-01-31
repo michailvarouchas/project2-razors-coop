@@ -26,28 +26,40 @@ namespace Project_Cooperation.Services
             _db.SaveChanges();
         }
         
-        public void TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount)
+        public bool TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount)
         {
             
             var userAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == userId);
-            userAccount.Balance -= ammount;
-            var adminAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == adminId);
-            adminAccount.Balance += ammount / 2;
-            
-            var membersAccounts = new List<InternalAccount>();
-
-            foreach (var item in members)
-            {
-                var membersAccount = _db.InternalAccounts.FirstOrDefault(i => i.ApplicationUserId == item.Id);
-                membersAccounts.Add(membersAccount);            
-            }
-
-            foreach (var item in membersAccounts)
-            {
-                item.Balance += (ammount / 2) / membersAccounts.Count;
-            }
            
-            _db.SaveChanges();
+            if (userAccount.Balance >= ammount)
+            {
+                var membersAccounts = new List<InternalAccount>();
+                userAccount.Balance -= ammount;
+                var adminAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == adminId);
+                adminAccount.Balance += ammount / 2;
+                foreach (var item in members)
+                {
+                    var membersAccount = _db.InternalAccounts.FirstOrDefault(i => i.ApplicationUserId == item.Id);
+                    membersAccounts.Add(membersAccount);
+                }
+
+                foreach (var item in membersAccounts)
+                {
+                    item.Balance += (ammount / 2) / membersAccounts.Count;
+                }
+
+                _db.SaveChanges();
+                return true;
+
+            }
+            return false;
+            
+            
+            
+            
+            
+
+            
         }
 
 

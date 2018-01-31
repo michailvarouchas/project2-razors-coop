@@ -98,22 +98,32 @@ namespace Project2_Cooperation.Controllers
 
                 if (checkOut.Order.CartItems.Count() != 0)
                 {
-                    //reduce product stock
-                    foreach (var cartItem in checkOut.Order.CartItems)
-                    {
-                        ReduceProductStock(cartItem);
-                    }
-
-                    _ordersRepo.CreateOrder(checkOut.Order);
 
                     //add transaction
                     var userId = _userManager.GetUserId(User);
                     var admin = await _userManager.FindByEmailAsync("admin@afdemp.gr");
                     var adminId = admin.Id;
-                    
+
                     var members = await GetMembers();
-                    _transactionRepository.TransactionCheckout(adminId, userId, members, checkOut.Order.Total);
-                    return RedirectToAction(nameof(Completed));
+
+                    var success = _transactionRepository.TransactionCheckout(adminId, userId, members, checkOut.Order.Total);
+                    if (success)
+                    {
+                        //reduce product stock
+                        foreach (var cartItem in checkOut.Order.CartItems)
+                        {
+                            ReduceProductStock(cartItem);
+                        }
+                        _ordersRepo.CreateOrder(checkOut.Order);
+                        return RedirectToAction(nameof(Completed));
+                    }
+                    else
+                    {
+                        TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository..}...";
+                        return RedirectToAction(nameof(checkOut));
+                    }
+
+
                 }
                 TempData["failMessage"] = "Products in your cart are no longer available!";
             }

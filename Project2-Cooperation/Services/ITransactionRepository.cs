@@ -9,6 +9,6 @@ namespace Project2_Cooperation.Services
     public interface ITransactionRepository
     {
         void AdminBuy(string adminId, string memberId, decimal ammount);
-        void TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount);
+        bool TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount);
     }
 }
