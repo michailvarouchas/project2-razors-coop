@@ -126,7 +126,7 @@ namespace Project2_Cooperation.Controllers
 
             _ordersRepo.UpdateOrder(orderToUpdate);
 
-            TempData["message"] = $"Order {id} updated successfully.";
+            TempData["message"] = $"Order #{id} updated successfully.";
 
             return RedirectToAction(nameof(ViewOrders));
         }

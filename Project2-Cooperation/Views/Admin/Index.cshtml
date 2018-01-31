@@ -27,7 +27,7 @@
                     <td>@product.Member.Email</td>
                     <td>@product.Stock</td>
                     <td>@product.SalePrice.ToString("C")</td>
-                    <td>@(product.IsLive ? "Live" : "Pending")</td>
+                    <td>@(product.IsLive ? "Published" : "Not published")</td>
                     <td>@product.Category</td>
                     <td>
                         <a asp-action="EditProduct" asp-route-id="@product.ProductId" title="Edit"><i class="fa fa-edit pl-3"></i></a>
