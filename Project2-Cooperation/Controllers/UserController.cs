@@ -27,13 +27,13 @@ namespace Project2_Cooperation.Controllers
         {
             if (category != null)
             {
-                var products = _productsRepo.Products.Where(p => p.IsLive == true && p.Category == category);
+                var products = _productsRepo.Products.Where(p => p.BoughtFromAdmin == true && p.IsLive == true && p.Category == category);
 
                 return View(new EshopIndexViewModel { Products=products, Category = category});
             }
             else
             {
-                var products = _productsRepo.Products.Where(p => p.IsLive == true);
+                var products = _productsRepo.Products.Where(p => p.BoughtFromAdmin == true && p.IsLive == true);
 
                 return View(new EshopIndexViewModel { Products = products, Category = null });
             }
