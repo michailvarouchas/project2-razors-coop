@@ -96,8 +96,6 @@ namespace Project2_Cooperation.Services
         {
             wishList.Date = DateTime.Now;
 
-            CartItem cartItemToRemove = new CartItem();
-
             foreach (var item in wishList.WishListItems)
             {
                 if (item.ProductId == productId)
@@ -105,14 +103,10 @@ namespace Project2_Cooperation.Services
                     item.Quantity -= quantity;
                     if (item.Quantity == 0 )
                     {
-                        cartItemToRemove = item;
+                        _db.CartItem.Remove(item);
                     }
                     
                 }
-            }
-            if (cartItemToRemove != null)
-            {
-                _db.CartItem.Remove(cartItemToRemove);
             }
 
             _db.Whishlist.Update(wishList);
