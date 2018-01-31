@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -65,7 +67,7 @@ namespace Project2_Cooperation.Controllers
                 }
             }
             ViewData["filter"] = $"Orders from \"{vm.DateStart.ToString("dd/MM/yyyy")}\" to \"{vm.DateEnd.ToString("dd/MM/yyyy")}\"";
-            return View(nameof(ViewOrders), new ViewOrdersViewModel() { Orders = orders , DateStart = vm.DateStart, DateEnd = vm.DateEnd, Phone = vm.Phone});
+            return View(nameof(ViewOrders), new ViewOrdersViewModel() { Orders = orders , DateStart = vm.DateStart, DateEnd = vm.DateEnd});
         }
 
         [HttpPost]

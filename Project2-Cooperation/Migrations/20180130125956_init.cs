@@ -155,7 +155,7 @@ namespace Project2Cooperation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InternalAccount",
+                name: "InternalAccounts",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
@@ -164,9 +164,9 @@ namespace Project2Cooperation.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InternalAccount", x => x.ApplicationUserId);
+                    table.PrimaryKey("PK_InternalAccounts", x => x.ApplicationUserId);
                     table.ForeignKey(
-                        name: "FK_InternalAccount_AspNetUsers_ApplicationUserId",
+                        name: "FK_InternalAccounts_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -386,7 +386,7 @@ namespace Project2Cooperation.Migrations
                 name: "CartItem");
 
             migrationBuilder.DropTable(
-                name: "InternalAccount");
+                name: "InternalAccounts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

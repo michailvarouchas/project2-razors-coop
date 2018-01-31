@@ -44,7 +44,7 @@
                 <a class="nav-link text-uppercase @(ViewData["currenttab"] == "orders"? "admin-activetab":"")" asp-controller="Admin" asp-action="ViewOrders">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "sales"? "admin-activetab":"")" href="#">Sales</a>
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "sales"? "admin-activetab":"")" asp-controller="Sales" asp-action="Index">Sales</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-uppercase @(ViewData["currenttab"] == "users"? "admin-activetab":"")" asp-action="ViewUsers">Users</a>

@@ -47,7 +47,13 @@ namespace Project2_Cooperation
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMemoryCache();
-            services.AddSession();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "SessionCart";
+                options.IdleTimeout = TimeSpan.FromDays(10);
+                options.Cookie.HttpOnly = true;
+            });
 
             services.AddMvc();
         }
@@ -79,7 +85,7 @@ namespace Project2_Cooperation
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             //SeedUsers.EnsurePopulated(app);
-            //SeedProducts.EnsurePopulated(app);
+            SeedProducts.EnsurePopulated(app);
             
         }
         

@@ -50,7 +50,6 @@ namespace Project2_Cooperation.Services
 
             if (wishList != null)
             {
-                //increase quantity or add new wishListItem
                 AddNewItemOrIncreaseQuantity(wishList, productId, quantity, wishListItem);
             }
             else
@@ -113,7 +112,7 @@ namespace Project2_Cooperation.Services
             }
             if (cartItemToRemove != null)
             {
-                wishList.WishListItems.Remove(cartItemToRemove);
+                _db.CartItem.Remove(cartItemToRemove);
             }
 
             _db.Whishlist.Update(wishList);

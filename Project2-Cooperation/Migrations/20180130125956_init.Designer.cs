@@ -11,7 +11,7 @@ using System;
 namespace Project2Cooperation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180124171034_init")]
+    [Migration("20180130125956_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,7 +214,7 @@ namespace Project2Cooperation.Migrations
 
                     b.HasKey("ApplicationUserId");
 
-                    b.ToTable("InternalAccount");
+                    b.ToTable("InternalAccounts");
                 });
 
             modelBuilder.Entity("Project2_Cooperation.Models.Order", b =>
