@@ -224,18 +224,19 @@ namespace Project2_Cooperation.Controllers
         }
 
         //Buy Products From Member
-        //public IActionResult BuyFromMember(int id)
-        //{
-        //    //var product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == id);
-        //    //product.BoughtFromAdmin = true;
-        //    //_productsRepo.UpdateProduct(product);
+        public IActionResult BuyFromMember(int id)
+        {
+            var product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == id);
+            product.BoughtFromAdmin = true;
+            _productsRepo.UpdateProduct(product);
 
-        //    //missing transactions
-           
-        //    //_transactionRepository.AdminBuy(parameters);
+            //transactions
+            var adminId = _userManager.GetUserId(User);
+            var ammount = product.Stock * product.BuyPrice;
+            _transactionRepository.AdminBuy(adminId, product.MemberId, ammount);
 
-        //    return View();
-            
-        //}
+            return RedirectToAction(nameof(Index));
+
+        }
     }
 }

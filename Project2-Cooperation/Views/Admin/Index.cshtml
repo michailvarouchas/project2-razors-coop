@@ -18,19 +18,24 @@
         </tr>
         @foreach (var product in Model)
         {
-            <tr>
+            @if (product.BoughtFromAdmin == true)
+            {
+                <tr>
 
-                <td>@product.Title</td>
-                <td>@product.Member.Email</td>
-                <td>@product.Stock</td>
-                <td>@product.SalePrice.ToString("C")</td>
-                <td>@(product.IsLive ? "Live" : "Pending")</td>
-                <td>@product.Category</td>
-                <td>
-                    <a asp-action="EditProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
-                    <a asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="confirm-delete-product"><i class="fa fa-trash pl-3"></i></a>
-                </td>
-            </tr>
+                    <td>@product.Title</td>
+                    <td>@product.Member.Email</td>
+                    <td>@product.Stock</td>
+                    <td>@product.SalePrice.ToString("C")</td>
+                    <td>@(product.IsLive ? "Live" : "Pending")</td>
+                    <td>@product.Category</td>
+                    <td>
+                        <a asp-action="EditProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
+                        <a asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="confirm-delete-product"><i class="fa fa-trash pl-3"></i></a>
+                    </td>
+                </tr>
+
+            }
+
 
 
         }
@@ -57,17 +62,22 @@ else
         </tr>
         @foreach (var product in Model)
         {
-            <tr>
+            @if (product.BoughtFromAdmin == false)
+            {
+                <tr>
 
-                <td>@product.Title</td>
-                <td>@product.Member</td>
-                <td>@product.Stock</td>
-                <td>@product.BuyPrice.ToString("C")</td>
-                <td>@product.Category</td>
-                <td>
-                    <a asp-action="BuyProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
-                </td>
-            </tr>
+                    <td>@product.Title</td>
+                    <td>@product.Member</td>
+                    <td>@product.Stock</td>
+                    <td>@product.BuyPrice.ToString("C")</td>
+                    <td>@product.Category</td>
+                    <td>
+                        <a asp-action="BuyFromMember" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
+                    </td>
+                </tr>
+
+            }
+
 
 
         }
