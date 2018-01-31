@@ -238,5 +238,21 @@ namespace Project2_Cooperation.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+
+        public IActionResult Sales()
+        {
+            var lastMonthOrders = _ordersRepo.GetOrders().Where(o => o.Date <= DateTime.Now && o.Date >= DateTime.Now.AddMonths(-1) && o.Completed);
+
+            decimal lastMonthSales = 0;
+
+            foreach (var item in lastMonthOrders)
+            {
+                lastMonthSales += item.Total;
+            }
+
+            ViewData["currenttab"] = "sales";
+
+            return View(lastMonthSales);
+        }
     }
 }
