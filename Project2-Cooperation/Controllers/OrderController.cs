@@ -119,7 +119,7 @@ namespace Project2_Cooperation.Controllers
                     }
                     else
                     {
-                        TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository..}...";
+                        TempData["failMessage"] = $"Insufficient balance. Your current balance is ";
                         return RedirectToAction(nameof(checkOut));
                     }
 
