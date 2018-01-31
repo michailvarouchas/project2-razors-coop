@@ -42,7 +42,7 @@
 }
 
 .portfolio-box {
-    height: 15em;
+    height: 17em;
     object-fit: cover;
     overflow: hidden;
 }
@@ -288,4 +288,19 @@ ul.dropdown-cart li .item-right button {
     color:black;
     text-decoration:underline;
     font-size:1.2em;
+}
+
+/*HOME*/
+.go-to-shop {
+    box-shadow: rgba(160, 158, 170, 0.74) 0px 0px 12px 15px inset;
+    background: url(/img/goToEshop.jpg)!important;
+    background-position: 0px -500px!important;
+}
+
+.go-to-shop a {
+    background-color: #2cae1d;
+    padding: 0.9em 1.6em;
+    padding-top: 1.45em;
+    border-radius: 0.6em;
+
 }
