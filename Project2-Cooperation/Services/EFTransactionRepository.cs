@@ -17,6 +17,11 @@ namespace Project_Cooperation.Services
             _db = db;
         }
 
+        public decimal UserBalance(string userId)
+        {
+            return _db.InternalAccounts.SingleOrDefault(u => u.ApplicationUserId == userId).Balance;
+        }
+
         public void AdminBuy(string adminId, string memberId, decimal ammount)
         {           
             var adminAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == adminId);
@@ -52,14 +57,7 @@ namespace Project_Cooperation.Services
                 return true;
 
             }
-            return false;
-            
-            
-            
-            
-            
-
-            
+            return false;    
         }
 
 
