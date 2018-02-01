@@ -21,7 +21,7 @@ namespace Project2_Cooperation.Models
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Name is Required!")]
-        // [RegularExpression(@"^[a-zA-Z''-'\s]{3,40}$", ErrorMessage = "Last Name is not valid.")]
+        //[RegularExpression(@"^[a-zA-Z''-'\s]{3,40}$", ErrorMessage = "Last Name is not valid.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -41,7 +41,7 @@ namespace Project2_Cooperation.Models
 
         [Required(ErrorMessage = "Zip code is Required!")]
         [DataType(DataType.PostalCode)]
-        // [RegularExpression(@"^\(?([0-4]{3})\)?[-. ]?([0-4]{2})[-. ]?([0-4]{0})$", ErrorMessage = "Entered zip code is not valid.")]
+        //[RegularExpression(@"^\(?([0-4]{3})\)?[-. ]?([0-4]{2})[-. ]?([0-4]{0})$", ErrorMessage = "Entered zip code is not valid.")]
         [Display(Name = "Postal Code")]
         public string Zip { get; set; }
     }
