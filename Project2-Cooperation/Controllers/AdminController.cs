@@ -152,7 +152,6 @@ namespace Project2_Cooperation.Controllers
                 _productsRepo.UpdateProduct(product);
 
                 //update transactions table pay member if the product is accepted (add price) 
-
                 TempData["message"] = $"Product {product.Title} updated successfully.";
 
                 return RedirectToAction(nameof(Index));
@@ -247,15 +246,17 @@ namespace Project2_Cooperation.Controllers
             
             ViewData["currenttab"] = "sales";
 
-            return View(new SalesViewModel {
+            var vm = new SalesViewModel
+            {
                 SalesByProduct = _reportingRepo.TopSellingProducts(3),
                 SalesByCategory = _reportingRepo.SalesByCategory(3),
-                YearSalesByMonth = _reportingRepo.LastYearSalesByMonth(),
+                //YearSalesByMonth = _reportingRepo.LastYearSalesByMonth(),
                 YearSales = _reportingRepo.LastYearSales(),
                 From = DateTime.Now.AddMonths(-11),
                 To = DateTime.Now
+            };
 
-            });
+            return View(vm);
         }
 
         

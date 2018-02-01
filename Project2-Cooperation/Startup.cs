@@ -86,7 +86,7 @@ namespace Project2_Cooperation
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             //SeedUsers.EnsurePopulated(app);
-            SeedProducts.EnsurePopulated(app);
+            //SeedProducts.EnsurePopulated(app);
             
         }
         

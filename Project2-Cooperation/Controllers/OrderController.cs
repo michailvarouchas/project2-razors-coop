@@ -126,6 +126,7 @@ namespace Project2_Cooperation.Controllers
 
 
                 }
+
                 TempData["failMessage"] = "Products in your cart are no longer available!";
             }
 

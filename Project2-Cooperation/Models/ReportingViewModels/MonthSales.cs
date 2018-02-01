@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Project2_Cooperation.Models.ReportingViewModels
 {
-    public class ProductSales
+    public class MonthSales
     {
-        public string ProductTitle { get; set; }
-        public int Quantity { get; set; }
+        public DateTime Month { get; set; }
         public decimal Sales { get; set; }
     }
 }

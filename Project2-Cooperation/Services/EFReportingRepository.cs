@@ -25,26 +25,30 @@ namespace Project2_Cooperation.Services
             return res;
         }
 
-        public List<decimal> LastYearSalesByMonth()
+        public List<MonthSales> LastYearSalesByMonth()
         {
             //list that holds last year sales by month
-            var lastYearSalesByMonth = new List<decimal>();
+            var lastYearSalesByMonth = new List<MonthSales>();
 
             for (int i = 0; i < 11; i++)
             {
                 //get all orders inside one month
-                var mOrders = _orderRepository.GetOrders().Where(o => o.Date <= BeginingOfCurrentMonth.AddMonths(1 - i) && o.Date >= BeginingOfCurrentMonth.AddMonths(-i) && o.Completed);
-
-                //intialize monthly sales
-                decimal mSales = 0;
+                var mOrders = _orderRepository.GetOrders()
+                    .Where(
+                        o =>
+                        o.Date <= BeginingOfCurrentMonth.AddMonths(1 - i) &&
+                        o.Date >= BeginingOfCurrentMonth.AddMonths(-i) &&
+                        o.Completed
+                );
 
                 //sum all order totals within that month
-                foreach (var item in mOrders)
+                var msales = new MonthSales
                 {
-                    mSales += item.Total;
-                }
+                    Sales = mOrders.Sum(o => o.Total),
+                    Month = BeginingOfCurrentMonth.AddMonths(-i)
+                };
 
-                lastYearSalesByMonth.Add(mSales);
+                lastYearSalesByMonth.Add(msales);
             }
             return lastYearSalesByMonth;
         }
@@ -52,15 +56,15 @@ namespace Project2_Cooperation.Services
         public IQueryable<ProductSales> TopSellingProducts(int numberOfProducts)
         {
             var pSales = from o in _db.Orders
-                         where o.Date <= BeginingOfCurrentMonth && o.Date >= BeginingOfCurrentMonth
+                         where o.Date <= BeginingOfCurrentMonth.AddMonths(1) && o.Date >= BeginingOfCurrentMonth.AddMonths(-10)
                          join ci in _db.CartItem on o.OrderId equals ci.OrderId into orderedItems
                          from oi in orderedItems
                          join prod in _db.Products on oi.ProductId equals prod.ProductId
                          group oi by new { prod.ProductId, prod.Title } into pGroup
-                         orderby pGroup.Sum(p => p.Quantity * p.Product.SalePrice)
+                         orderby pGroup.Sum(p => p.Quantity * p.Product.SalePrice) descending
                          select new ProductSales()
                          {
-                             ProductId = pGroup.Key.Title,
+                             ProductTitle = pGroup.Key.Title,
                              Quantity = pGroup.Sum(q => q.Quantity),
                              Sales = pGroup.Sum(p => p.Quantity * p.Product.SalePrice)
                          };
@@ -71,12 +75,12 @@ namespace Project2_Cooperation.Services
         public IQueryable<CategorySales> SalesByCategory(int numberOfCategories)
         {
             var cSales = from o in _db.Orders
-                         where o.Date <= BeginingOfCurrentMonth && o.Date >= BeginingOfCurrentMonth
+                         where o.Date <= BeginingOfCurrentMonth.AddMonths(1) && o.Date >= BeginingOfCurrentMonth.AddMonths(-10)
                          join ci in _db.CartItem on o.OrderId equals ci.OrderId into orderedItems
                          from oi in orderedItems
                          join prod in _db.Products on oi.ProductId equals prod.ProductId
                          group oi by new { prod.Category } into pGroup
-                         orderby pGroup.Sum(p => p.Quantity * p.Product.SalePrice)
+                         orderby pGroup.Sum(p => p.Quantity * p.Product.SalePrice) descending
                          select new CategorySales()
                          {
                              Category = pGroup.Key.Category,

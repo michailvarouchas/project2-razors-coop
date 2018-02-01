@@ -9,7 +9,7 @@ namespace Project2_Cooperation.Models.ReportingViewModels
     {
         public IQueryable<ProductSales> SalesByProduct { get; set; }
         public IQueryable<CategorySales> SalesByCategory { get; set; }
-        public List<decimal> YearSalesByMonth { get; set; }
+        public List<MonthSales> YearSalesByMonth { get; set; }
         public decimal YearSales { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }

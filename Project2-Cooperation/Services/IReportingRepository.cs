@@ -10,7 +10,7 @@ namespace Project2_Cooperation.Services
     public interface IReportingRepository
     {
         decimal LastYearSales();
-        List<decimal> LastYearSalesByMonth();
+        List<MonthSales> LastYearSalesByMonth();
         IQueryable<ProductSales> TopSellingProducts(int numberOfProducts);
         IQueryable<CategorySales> SalesByCategory(int numberOfCategories);
     }
