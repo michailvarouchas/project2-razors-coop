@@ -57,7 +57,7 @@ namespace Project2_Cooperation.Services
         {
             var pSales = from o in _db.Orders
                          where o.Date <= BeginingOfCurrentMonth.AddMonths(1) && o.Date >= BeginingOfCurrentMonth.AddMonths(-10)
-                         join ci in _db.CartItem on o.OrderId equals ci.OrderId into orderedItems
+                         join ci in _db.CartItems on o.OrderId equals ci.Order.OrderId into orderedItems
                          from oi in orderedItems
                          join prod in _db.Products on oi.ProductId equals prod.ProductId
                          group oi by new { prod.ProductId, prod.Title } into pGroup
@@ -76,7 +76,7 @@ namespace Project2_Cooperation.Services
         {
             var cSales = from o in _db.Orders
                          where o.Date <= BeginingOfCurrentMonth.AddMonths(1) && o.Date >= BeginingOfCurrentMonth.AddMonths(-10)
-                         join ci in _db.CartItem on o.OrderId equals ci.OrderId into orderedItems
+                         join ci in _db.CartItems on o.OrderId equals ci.Order.OrderId into orderedItems
                          from oi in orderedItems
                          join prod in _db.Products on oi.ProductId equals prod.ProductId
                          group oi by new { prod.Category } into pGroup

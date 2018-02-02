@@ -200,7 +200,7 @@ namespace Project2Cooperation.Migrations
 
                     b.HasIndex("WishListApplicationUserId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Project2_Cooperation.Models.InternalAccount", b =>
@@ -313,7 +313,7 @@ namespace Project2Cooperation.Migrations
 
                     b.HasKey("ApplicationUserId");
 
-                    b.ToTable("Whishlist");
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -363,7 +363,7 @@ namespace Project2Cooperation.Migrations
 
             modelBuilder.Entity("Project2_Cooperation.Models.CartItem", b =>
                 {
-                    b.HasOne("Project2_Cooperation.Models.Order")
+                    b.HasOne("Project2_Cooperation.Models.Order", "Order")
                         .WithMany("CartItems")
                         .HasForeignKey("OrderId");
 

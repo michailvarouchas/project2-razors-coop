@@ -24,8 +24,7 @@
                     dataType: 'json',
                 }).done((repData) => {
                     //on success ...
-                    var data = repData;
-                    //console.log(repData);
+                    console.log(repData);
 
             // CanvasJS doughnut chart to show annual sales percentage from first prod #1
             var salesDoughnutChartUS = new CanvasJS.Chart("sales-doughnut-chart-us", {
@@ -276,7 +275,7 @@
                         indexLabelPlacement: "outside",
                         type: "bar",
                         dataPoints: [
-                            { y: repData.salesByCategory[1].total, indexLabel: repData.salesByCategory[1].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: cat2Name },
+                            //{ y: repData.salesByCategory[1].total, indexLabel: repData.salesByCategory[1].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: cat2Name },
                             { y: repData.salesByCategory[0].total, indexLabel: repData.salesByCategory[0].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: cat1Name }
                         ]
                     }

@@ -179,6 +179,7 @@ namespace Project2Cooperation.Migrations
                 {
                     ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BoughtFromAdmin = table.Column<bool>(nullable: false),
                     BuyPrice = table.Column<decimal>(nullable: false),
                     Category = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -226,7 +227,7 @@ namespace Project2Cooperation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Whishlist",
+                name: "Wishlist",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
@@ -234,9 +235,9 @@ namespace Project2Cooperation.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Whishlist", x => x.ApplicationUserId);
+                    table.PrimaryKey("PK_Wishlist", x => x.ApplicationUserId);
                     table.ForeignKey(
-                        name: "FK_Whishlist_AspNetUsers_ApplicationUserId",
+                        name: "FK_Wishlist_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -267,7 +268,7 @@ namespace Project2Cooperation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItem",
+                name: "CartItems",
                 columns: table => new
                 {
                     CartItemId = table.Column<int>(nullable: false)
@@ -279,23 +280,23 @@ namespace Project2Cooperation.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItem", x => x.CartItemId);
+                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
                     table.ForeignKey(
-                        name: "FK_CartItem_Orders_OrderId",
+                        name: "FK_CartItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartItem_Products_ProductId",
+                        name: "FK_CartItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartItem_Whishlist_WishListApplicationUserId",
+                        name: "FK_CartItems_Wishlist_WishListApplicationUserId",
                         column: x => x.WishListApplicationUserId,
-                        principalTable: "Whishlist",
+                        principalTable: "Wishlist",
                         principalColumn: "ApplicationUserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -340,18 +341,18 @@ namespace Project2Cooperation.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_OrderId",
-                table: "CartItem",
+                name: "IX_CartItems_OrderId",
+                table: "CartItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ProductId",
-                table: "CartItem",
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_WishListApplicationUserId",
-                table: "CartItem",
+                name: "IX_CartItems_WishListApplicationUserId",
+                table: "CartItems",
                 column: "WishListApplicationUserId");
 
             migrationBuilder.CreateIndex(
@@ -383,7 +384,7 @@ namespace Project2Cooperation.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartItem");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "InternalAccounts");
@@ -398,7 +399,7 @@ namespace Project2Cooperation.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Whishlist");
+                name: "Wishlist");
 
             migrationBuilder.DropTable(
                 name: "UserDetails");

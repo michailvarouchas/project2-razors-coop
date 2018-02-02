@@ -28,8 +28,8 @@ namespace Project2_Cooperation.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
-        public DbSet<WishList> Whishlist { get; set; }
-        public DbSet<CartItem> CartItem { get; set; }
+        public DbSet<WishList> Wishlist { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
         public DbSet<InternalAccount> InternalAccounts { get; set; }
     }
 }

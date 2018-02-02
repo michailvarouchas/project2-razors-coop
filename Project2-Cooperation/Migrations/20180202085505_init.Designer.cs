@@ -11,8 +11,8 @@ using System;
 namespace Project2Cooperation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180130145651_boolBoughtFromAdmin")]
-    partial class boolBoughtFromAdmin
+    [Migration("20180202085505_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,7 +201,7 @@ namespace Project2Cooperation.Migrations
 
                     b.HasIndex("WishListApplicationUserId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Project2_Cooperation.Models.InternalAccount", b =>
@@ -314,7 +314,7 @@ namespace Project2Cooperation.Migrations
 
                     b.HasKey("ApplicationUserId");
 
-                    b.ToTable("Whishlist");
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -364,7 +364,7 @@ namespace Project2Cooperation.Migrations
 
             modelBuilder.Entity("Project2_Cooperation.Models.CartItem", b =>
                 {
-                    b.HasOne("Project2_Cooperation.Models.Order")
+                    b.HasOne("Project2_Cooperation.Models.Order", "Order")
                         .WithMany("CartItems")
                         .HasForeignKey("OrderId");
 

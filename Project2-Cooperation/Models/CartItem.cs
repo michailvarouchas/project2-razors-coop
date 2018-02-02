@@ -16,13 +16,11 @@ namespace Project2_Cooperation.Models
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
 
+        public Order Order { get; set; }
+
         public int Quantity { get; set; }
 
         public decimal Subtotals => Product.SalePrice * Quantity;
-
-        [ForeignKey("Order")]
-        public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
 
         public CartItem()
         {
