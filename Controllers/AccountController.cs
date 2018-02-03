@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Project2_Cooperation.Models;
-using Project2_Cooperation.Models.AccountViewModels;
-using Project2_Cooperation.Services;
+using project2_razors_coop.Models;
+using project2_razors_coop.Models.AccountViewModels;
+using project2_razors_coop.Services;
 
-namespace Project2_Cooperation.Controllers
+namespace project2_razors_coop.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -222,7 +222,6 @@ namespace Project2_Cooperation.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -231,14 +230,9 @@ namespace Project2_Cooperation.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return View("ConfirmEmail");
-
-                    //give user the role "User"
-                    //var role = await _userManager.AddToRoleAsync(user, "User");
-
-                    //return RedirectToLocal(returnUrl);   
+                    return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
             }

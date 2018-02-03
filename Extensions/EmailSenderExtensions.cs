@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using Project2_Cooperation.Services;
+using project2_razors_coop.Services;
 
-namespace Project2_Cooperation.Services
+namespace project2_razors_coop.Services
 {
     public static class EmailSenderExtensions
     {
