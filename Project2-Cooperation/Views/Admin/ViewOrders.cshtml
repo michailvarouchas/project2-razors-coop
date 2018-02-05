@@ -52,21 +52,34 @@ else
     <hr />
     @foreach (var order in Model.Orders)
     {
-        <div class="row">
-            <p class="col-2">@order.UserDetails.FirstName</p>
-            <p class="col-2">@order.UserDetails.Phone</p>
-            <p class="col-2">@order.Total.ToString("C")</p>
-            <p class="col-2">@(order.Completed ? "Completed" : "Pending")</p>
-            <p class="col-2">@order.Date</p>
-            <p class="col-2">
-                @if (!order.Completed)
-                {
-                    <a asp-action="MarkAsCompleted" asp-route-id="@order.OrderId" title="Mark as completed" class="confirm-complete-order"><i class="fa fa-check pl-3"></i></a>
-                    <a asp-action="DeleteOrder" asp-route-id="@order.OrderId" title="Delete order" class="confirm-delete-order"><i class="fa fa-trash pl-3"></i></a>
-                }
-                <a id="@order.OrderId" class="viewOrder" title="Order details" href="/"><i class="fa fa-info-circle pl-3"></i></a>
-            </p>
-        </div>
+
+        @if (order.Archived == false && order.Canceled == false)
+        {
+            <div class="row">
+                <p class="col-2">@order.UserDetails.FirstName</p>
+                <p class="col-2">@order.UserDetails.Phone</p>
+                <p class="col-2">@order.Total.ToString("C")</p>
+                <p class="col-2">@(order.Completed ? "Completed" : "Pending")</p>
+                <p class="col-2">@order.Date</p>
+                <p class="col-2">
+                    @if (!order.Completed)
+                    {
+                        <a asp-action="MarkAsCompleted" asp-route-id="@order.OrderId" title="Mark as completed" class="confirm-complete-order"><i class="fa fa-check pl-3"></i></a>
+                        <a asp-controller="Order" asp-action="CancelOrder" asp-route-id="@order.OrderId" title="Cancel order" class="confirm-cancel-order"><i class="fa fa-remove pl-3"></i></a>
+                        <a id="@order.OrderId" class="viewOrder" title="Order details" href="/"><i class="fa fa-info-circle pl-3"></i></a>
+                    }
+
+                    else
+                    {
+                        <a id="@order.OrderId" class="viewOrder" title="Order details" href="/"><i class="fa fa-info-circle pl-3"></i></a>
+                        <a asp-action="ArchiveOrder" asp-route-id="@order.OrderId" title="Archive" class="archive-order"><i class="fa fa-folder-open pl-3"></i></a>
+                    }
+                    
+                </p>
+            </div>
+
+        }
+
 
         //MODAL
         <div class="modal fade" id="modal_@order.OrderId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -141,11 +154,10 @@ else
 
 }
 
-
-<div id="confirmDialog" title="Delete Order">
-    <h5>Order is about to be deleted permanently!</h5>
-    <p>If you delete it, products stock will roll back to prior state.</p>
-    <p>Are you sure you want to delete this order? </p>
+<div id="confirmDialog" title="Cancel Order">
+    <h5>Order is about to be canceled!</h5>
+    <p>If you cancel it, products stock will roll back to prior state.</p>
+    <p>Are you sure you want to cancel this order? </p>
 </div>
 
 <div id="confirmDialog2" title="Complete Order">
@@ -154,12 +166,17 @@ else
     <p>Are you sure you want to complete this order? </p>
 </div>
 
+<div id="confirmDialog3" title="Archive Order">
+    <h5>Order is about to be archived!</h5>
+    <p>Are you sure you want to archive this order? </p>
+</div>
+
 @section Scripts
     {
     <script>
-        //ORDER DELETE CONFIRMATION
+        //ORDER CANCEL CONFIRMATION
         $(function () {
-            $('.confirm-delete-order').click(function (e) {
+            $('.confirm-cancel-order').click(function (e) {
                 e.preventDefault();
                 var href = $(this).attr('href');
                 console.log(href);
@@ -171,7 +188,7 @@ else
                 modal: true,
                 resizable: false,
                 buttons: {
-                    "Delete": function () {
+                    "Cancel Order": function () {
                         var href = $(this).data("href");
                         window.location.href = href;
                     },
@@ -181,7 +198,7 @@ else
                 },
             });
         });
-        //ORDER DELETE CONFIRMATION
+        //ORDER COMPLETE CONFIRMATION
         $(function () {
             $('.confirm-complete-order').click(function (e) {
                 e.preventDefault();
@@ -196,6 +213,30 @@ else
                 resizable: false,
                 buttons: {
                     "Complete": function () {
+                        var href = $(this).data("href");
+                        window.location.href = href;
+                    },
+                    "Cancel": function (e) {
+                        $(this).dialog('close');
+                    }
+                },
+            });
+        });
+        //ORDER ARCHIVE CONFIRMATION
+        $(function () {
+            $('.archive-order').click(function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                console.log(href);
+                $('#confirmDialog3').data('href', href).dialog('open');
+            });
+
+            $('#confirmDialog3').dialog({
+                autoOpen: false,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Archive": function () {
                         var href = $(this).data("href");
                         window.location.href = href;
                     },
