@@ -14,5 +14,7 @@ namespace Project2_Cooperation.Services
         void DeleteOrder(int Id);
         Product GetCartItemProduct(CartItem ci);
         decimal GetOrderTotal(Order order);
+        void ArchiveOrder(Order order);
+        void CanceledOrder(Order order);
     }
 }

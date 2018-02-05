@@ -58,6 +58,18 @@ namespace Project2_Cooperation.Services
             }            
         }
 
+        public void CanceledOrder(Order order)
+        {
+            order.Canceled = true;
+            _db.SaveChanges();
+        }
+
+        public void ArchiveOrder(Order order)
+        {
+            order.Archived = true;
+            _db.SaveChanges();
+        }
+
         public void UpdateOrder(Order order)
         {
             _db.Orders.Update(order);

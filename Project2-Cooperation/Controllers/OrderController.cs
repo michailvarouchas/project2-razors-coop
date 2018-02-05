@@ -9,6 +9,7 @@ using Project2_Cooperation.Models;
 using Project2_Cooperation.Models.EshopViewModels;
 using Project2_Cooperation.Services;
 using System.Collections;
+using Microsoft.EntityFrameworkCore;
 
 namespace Project2_Cooperation.Controllers
 {
@@ -135,6 +136,29 @@ namespace Project2_Cooperation.Controllers
 
         }
 
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            var orderToCancel = _ordersRepo.GetOrders().Include(c => c.CartItems).SingleOrDefault(o => o.OrderId == id);
+
+            //roll-back product stock
+            foreach (var cartItem in orderToCancel.CartItems)
+            {
+                RollBackProductStock(cartItem);
+            }
+
+            //return money
+            var userId = orderToCancel.UserDetails.ApplicationUserId;
+            var admin = await _userManager.FindByEmailAsync("admin@afdemp.gr");
+            var adminId = admin.Id;
+
+            var members = await GetMembers();
+
+            _transactionRepository.ReturnMoney(adminId, userId, members, orderToCancel.Total);
+            _ordersRepo.CanceledOrder(orderToCancel);
+            return RedirectToAction("ViewOrders", "Admin");
+                
+        }
+
         public ActionResult Completed()
         {
             _cart.ClearCart();
@@ -163,5 +187,15 @@ namespace Project2_Cooperation.Controllers
 
             return productToConfirm.Stock >= ci.Quantity ? ci.Quantity : productToConfirm.Stock;
         }
+
+        private void RollBackProductStock(CartItem ci)
+        {
+            var productToUpdate = _productsRepo.Products.FirstOrDefault(p => p.ProductId == ci.ProductId);
+
+            productToUpdate.Stock += ci.Quantity;
+
+            _productsRepo.UpdateProduct(productToUpdate);
+        }
     }
+
 }

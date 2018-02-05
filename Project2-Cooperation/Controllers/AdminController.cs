@@ -109,6 +109,14 @@ namespace Project2_Cooperation.Controllers
             return RedirectToAction(nameof(ViewOrders));
         }
 
+        public IActionResult ArchiveOrder(int id)
+        {
+            var orderToArchive = _ordersRepo.GetOrders().SingleOrDefault(o => o.OrderId == id);
+            _ordersRepo.ArchiveOrder(orderToArchive);
+            return RedirectToAction(nameof(ViewOrders));
+        }
+
+
         public IActionResult MarkAsCompleted(int id)
         {
             Order orderToUpdate = _ordersRepo.GetOrders().SingleOrDefault(o => o.OrderId == id);

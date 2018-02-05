@@ -60,6 +60,29 @@ namespace Project_Cooperation.Services
             return false;    
         }
 
+        public void ReturnMoney(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount)
+        {
+            var userAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == userId);
+            var adminAccount = _db.InternalAccounts.SingleOrDefault(a => a.ApplicationUserId == adminId);
+            var membersAccounts = new List<InternalAccount>();
+
+            foreach (var item in members)
+            {
+                var membersAccount = _db.InternalAccounts.FirstOrDefault(i => i.ApplicationUserId == item.Id);
+                membersAccounts.Add(membersAccount);
+            }
+
+            userAccount.Balance += ammount;
+            adminAccount.Balance -= ammount / 2;
+            foreach (var item in membersAccounts)
+            {
+                item.Balance -= (ammount / 2) / membersAccounts.Count;
+            }
+
+            _db.SaveChanges();
+
+        }
+
 
     }
 }

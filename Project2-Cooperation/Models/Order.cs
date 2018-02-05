@@ -23,6 +23,8 @@ namespace Project2_Cooperation.Models
 
         public bool Completed { get; set; }
 
+        public bool Archived { get; set; }
+
         public decimal Total { get; set; }
     }
 }
