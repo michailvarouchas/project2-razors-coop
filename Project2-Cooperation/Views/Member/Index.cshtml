@@ -12,7 +12,8 @@
             <th>Price</th>
             <th>Category</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th>Initial Offer</th>
+            <th>Current Stock</th>
         </tr>
         @foreach (var product in Model)
         {
@@ -20,21 +21,10 @@
                 <td>@product.Title</td>
                 <td>@product.SalePrice.ToString("C")</td>
                 <td>@product.Category</td>
-                <td>@(product.IsLive ? "Live" : "Pending")</td>
-                <td>
-                    @if (product.IsLive)
-                    {
-                        <i class="fa fa-ban" title="Edit is disabled"></i>
-                    }
-                    else
-                    {
-                        <a asp-action="EditProduct" asp-route-id="@product.ProductId"><i class="fa fa-edit pl-3"></i></a>
-                    }
-
-
-                </td>
+                <td>@(product.IsLive ? "Sold" : "Offered")</td>
+                <td>@product.StockInitOffer</td>
+                <td>@product.Stock</td>
             </tr>
-
         }
     </table>
 }

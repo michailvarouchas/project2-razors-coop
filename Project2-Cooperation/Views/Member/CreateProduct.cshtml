@@ -20,16 +20,16 @@
             <span asp-validation-for="Category"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="Stock">Stock</label>
-            <input type="text" class="form-control form-control-sm" asp-for="Stock" placeholder="Enter Product Category">
-            <span asp-validation-for="Stock"></span>
+            <label asp-for="StockInitOffer">Stock Offer</label>
+            <input type="text" class="form-control form-control-sm" asp-for="StockInitOffer" placeholder="Enter Product Category">
+            <span asp-validation-for="StockInitOffer"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="BuyPrice">BuyPrice (&euro;)</label>
+            <label asp-for="BuyPrice">Wholesale Price (&euro;)</label>
             <input type="text" class="form-control form-control-sm" asp-for="BuyPrice" placeholder="Enter Product Price">
         </div>
         <div class="col-md-3">
-            <label asp-for="SalePrice">SalePrice (&euro;)</label>
+            <label asp-for="SalePrice">Retail Price (&euro;)</label>
             <input type="text" class="form-control form-control-sm disabled" asp-for="SalePrice" placeholder="Enter Product Price" disabled>
         </div>
     </div>

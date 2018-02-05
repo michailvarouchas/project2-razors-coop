@@ -43,6 +43,9 @@ namespace Project2_Cooperation.Models
         public int Stock { get; set; }
 
         [Required]
+        public int StockInitOffer { get; set; }
+
+        [Required]
         public string Category { get; set; }
 
         public bool Featured { get; set; }

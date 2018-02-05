@@ -26,290 +26,285 @@
                     //on success ...
                     console.log(repData);
 
-            // CanvasJS doughnut chart to show annual sales percentage from first prod #1
-            var salesDoughnutChartUS = new CanvasJS.Chart("sales-doughnut-chart-us", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                title: {
-                    fontColor: "#848484",
-                    fontSize: 56,
-                    horizontalAlign: "center",
-                    text: (repData.salesByProduct[0].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
-                    verticalAlign: "center"
-                },
-                toolTip: {
-                    backgroundColor: "#ffffff",
-                    borderThickness: 0,
-                    cornerRadius: 0,
-                    fontColor: "#424242"
-                },
-                data: [
-                    {
-                        explodeOnClick: true,
-                        innerRadius: "90%",
-                        radius: "100%",
-                        startAngle: 270,
-                        type: "doughnut",
-                        dataPoints: [
-                            { y: (repData.salesByProduct[0].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[0].productTitle + ": <span>" + repData.salesByProduct[0].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
-                            { y: (1 - repData.salesByProduct[0].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true }
+                    // CanvasJS doughnut chart to show annual sales percentage from first prod #1
+                    var salesDoughnutChartUS = new CanvasJS.Chart("sales-doughnut-chart-us", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        title: {
+                            fontColor: "#848484",
+                            fontSize: 56,
+                            horizontalAlign: "center",
+                            text: (repData.salesByProduct[0].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
+                            verticalAlign: "center"
+                        },
+                        toolTip: {
+                            backgroundColor: "#ffffff",
+                            borderThickness: 0,
+                            cornerRadius: 0,
+                            fontColor: "#424242"
+                        },
+                        data: [
+                            {
+                                explodeOnClick: true,
+                                innerRadius: "90%",
+                                radius: "100%",
+                                startAngle: 270,
+                                type: "doughnut",
+                                dataPoints: [
+                                    { y: (repData.salesByProduct[0].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[0].productTitle + ": <span>" + repData.salesByProduct[0].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
+                                    { y: (1 - repData.salesByProduct[0].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true }
+                                ]
+                            }
                         ]
-                    }
-                ]
-            });
-
-            // CanvasJS doughnut chart to show annual sales percentage from second product #2
-            var salesDoughnutChartNL = new CanvasJS.Chart("sales-doughnut-chart-nl", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                title: {
-                    fontColor: "#848484",
-                    fontSize: 56,
-                    horizontalAlign: "center",
-                    text: (repData.salesByProduct[1].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
-                    verticalAlign: "center"
-                },
-                toolTip: {
-                    backgroundColor: "#ffffff",
-                    borderThickness: 0,
-                    cornerRadius: 0,
-                    fontColor: "#424242"
-                },
-                data: [
-                    {
-                        explodeOnClick: true,
-                        innerRadius: "93%",
-                        radius: "100%",
-                        startAngle: 270,
-                        type: "doughnut",
-                        dataPoints: [
-                            { y: (repData.salesByProduct[1].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[1].productTitle + ": <span>" + repData.salesByProduct[1].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
-                            { y: (1 - repData.salesByProduct[1].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true }
-                        ]
-                    }
-                ]
-            });
-
-            // CanvasJS doughnut chart to show annual sales percentage from third product #3
-            var salesDoughnutChartDE = new CanvasJS.Chart("sales-doughnut-chart-de", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                title: {
-                    fontColor: "#848484",
-                    fontSize: 56,
-                    horizontalAlign: "center",
-                    text: (repData.salesByProduct[2].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
-                    verticalAlign: "center"
-                },
-                toolTip: {
-                    backgroundColor: "#ffffff",
-                    borderThickness: 0,
-                    cornerRadius: 0,
-                    fontColor: "#424242"
-                },
-                data: [
-                    {
-                        explodeOnClick: true,
-                        innerRadius: "96%",
-                        radius: "100%",
-                        startAngle: 270,
-                        type: "doughnut",
-                        dataPoints: [
-                            { y: (repData.salesByProduct[2].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[2].productTitle + ": <span>" + repData.salesByProduct[2].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
-                            { y: (1 - repData.salesByProduct[2].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true}
-                        ]
-                    }
-                ]
-            });
-
-
-
-
-            // CanvasJS doughnut chart to show revenue and costs
-            var netProfit = repData.yearSales / 6;
-            var costs = repData.yearSales - repData.yearSales / 6;
-            var usersDoughnutChart = new CanvasJS.Chart("users-doughnut-chart", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                toolTip: {
-                    backgroundColor: "#000000",
-                    borderThickness: 2,
-                    cornerRadius: 0,
-                    fontColor: "#ffffff",
-                    contentFormatter: function (e) {
-                        return e.entries[0].dataPoint.name + ": " + e.entries[0].dataPoint.y.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + " - " + (e.entries[0].dataPoint.y / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }); // calcuting and showing percentage of users inside tooltip
-                    }
-                },
-                data: [
-                    {
-                        innerRadius: "82%",
-                        radius: "100%",
-                        showInLegend: false,
-                        startAngle: 180,
-                        type: "doughnut",
-                        dataPoints: [
-                            { y: netProfit, name: "Net Profit", color: "#c70000" },
-                            { y: costs, name: "Costs", color: "#424242", exploded: true }
-                        ]
-                    }
-                ]
-            });
-
-            // CanvasJS spline chart to show revenue and profit
-            var usersSplineChart = new CanvasJS.Chart("users-spline-chart", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                axisX: {
-                    gridThickness: 0,
-                    labelFontColor: "#bbbbbb",
-                    lineColor: "#bbbbbb"
-                },
-                axisY: {
-                    gridThickness: 0,
-                    labelFontColor: "#bbbbbb",
-                    lineColor: "#bbbbbb"
-                },
-                legend: {
-                    dockInsidePlotArea: true,
-                    fontColor: "#ffffff",
-                    fontSize: 16,
-                    horizontalAlign: "right",
-                    verticalAlign: "top"
-                },
-                toolTip: {
-                    backgroundColor: "#000000",
-                    borderThickness: 2,
-                    cornerRadius: 0,
-                    fontColor: "#ffffff",
-                    shared: true
-                },
-                data: [
-                    {
-                        color: "#424242",
-                        legendMarkerType: "square",
-                        legendText: "Revenue",
-                        name: "Revenue",
-                        showInLegend: true,
-                        type: "spline",
-                        dataPoints: 
-                        [
-                            { x: new Date(repData.yearSalesByMonth[0].month), y: repData.yearSalesByMonth[0].sales },
-                            { x: new Date(repData.yearSalesByMonth[1].month), y: repData.yearSalesByMonth[1].sales },
-                            { x: new Date(repData.yearSalesByMonth[2].month), y: repData.yearSalesByMonth[2].sales },
-                            { x: new Date(repData.yearSalesByMonth[3].month), y: repData.yearSalesByMonth[3].sales },
-                            { x: new Date(repData.yearSalesByMonth[4].month), y: repData.yearSalesByMonth[4].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[5].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[6].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[7].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[8].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[9].sales },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[10].sales }
-                        ]
-                    },
-                    {
-                        color: "#c70000",
-                        legendMarkerType: "square",
-                        legendText: "Net Profit",
-                        name: "Net Profit",
-                        showInLegend: true,
-                        type: "spline",
-                        dataPoints:
-                        [
-                            { x: new Date(repData.yearSalesByMonth[0].month), y: repData.yearSalesByMonth[0].sales / 6  },
-                            { x: new Date(repData.yearSalesByMonth[1].month), y: repData.yearSalesByMonth[1].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[2].month), y: repData.yearSalesByMonth[2].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[3].month), y: repData.yearSalesByMonth[3].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[4].month), y: repData.yearSalesByMonth[4].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[5].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[6].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[7].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[8].sales / 6 },
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[9].sales / 6},
-                            { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[10].sales / 6}
-                        ]
-                    }
-                ]
-            });
-
-            // CanvasJS bar chart to show category over total sales
-            var cat2Sales = parseFloat("@(Model.SalesByCategory.Count() >= 2 ? Model.SalesByCategory.ToArray()[1].Total : 0)");
-            var cat1Sales = parseFloat("@(Model.SalesByCategory.Count() >= 1 ? Model.SalesByCategory.ToArray()[0].Total : 0)");
-
-            var cat2Name = "@(Model.SalesByCategory.Count() >= 2 ? Model.SalesByCategory.ToArray()[1].Category : "Not Available")";
-            var cat1Name = "@(Model.SalesByCategory.Count() >= 1 ? Model.SalesByCategory.ToArray()[0].Category : "Not Available")";
-
-            var cat2SalesString = "@((Model.SalesByCategory.Count() >= 2 ? Model.SalesByCategory.ToArray()[1].Total : 0).ToString("F2"))" + " €";
-            var cat1SalesString = "@((Model.SalesByCategory.Count() >= 1 ? Model.SalesByCategory.ToArray()[0].Total : 0).ToString("F2"))" + " €";
-
-            var usersCountriesBarChart = new CanvasJS.Chart("users-countries-bar-chart", {
-                animationEnabled: true,
-                backgroundColor: "transparent",
-                axisX: {
-                    labelFontColor: "#000",
-                    labelFontSize: 20,
-                    lineThickness: 0,
-                    tickThickness: 0
-                },
-                axisY: {
-                    gridThickness: 0,
-                    lineThickness: 0,
-                    tickThickness: 0,
-                    valueFormatString: " "
-
-                },
-                toolTip: {
-                    backgroundColor: "#ffffff",
-                    borderThickness: 0,
-                    cornerRadius: 0,
-                    fontColor: "#424242",
-                    contentFormatter: function (e) {
-                        return e.entries[0].dataPoint.label + ": " + (e.entries[0].dataPoint.y / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }); // calculating and showing category over total sales
-                    }
-                },
-                data: [
-                    {
-                        color: "#424242",
-                        indexLabelFontColor: "#c70000",
-                        indexLabelFontFamily: "calibri",
-                        indexLabelFontSize: 18,
-                        indexLabelPlacement: "outside",
-                        type: "bar",
-                        dataPoints: [
-                            //{ y: repData.salesByCategory[1].total, indexLabel: repData.salesByCategory[1].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: cat2Name },
-                            { y: repData.salesByCategory[0].total, indexLabel: repData.salesByCategory[0].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: cat1Name }
-                        ]
-                    }
-                ]
-            });
-
-            jQuery.scrollSpeed(100, 400); // for smooth mouse wheel scrolling
-
-            // jQuery.inview plugin
-            $('.inview').one('inview', function (e, isInView) {
-                if (isInView) {
-                    switch (this.id) {
-                        case "sales-doughnut-chart-us": salesDoughnutChartUS.render();
-                            break;
-                        case "sales-doughnut-chart-nl": salesDoughnutChartNL.render();
-                            break;
-                        case "sales-doughnut-chart-de": salesDoughnutChartDE.render();
-                            break;
-                        case "page-views-spline-area-chart": pageViewsSplineAreaChart.render();
-                            break;
-                        case "orders-spline-area-chart": ordersSplineAreaChart.render();
-                            break;
-                        case "revenue-spline-area-chart": revenueSplineAreaChart.render();
-                            break;
-                        case "users-doughnut-chart": usersDoughnutChart.render();
-                            break;
-                        case "users-spline-chart": usersSplineChart.render();
-                            break;
-                        case "users-countries-bar-chart": usersCountriesBarChart.render();
-                            break;
-                    }
-                }
-            });
                     });
+
+                    // CanvasJS doughnut chart to show annual sales percentage from second product #2
+                    var salesDoughnutChartNL = new CanvasJS.Chart("sales-doughnut-chart-nl", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        title: {
+                            fontColor: "#848484",
+                            fontSize: 56,
+                            horizontalAlign: "center",
+                            text: (repData.salesByProduct[1].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
+                            verticalAlign: "center"
+                        },
+                        toolTip: {
+                            backgroundColor: "#ffffff",
+                            borderThickness: 0,
+                            cornerRadius: 0,
+                            fontColor: "#424242"
+                        },
+                        data: [
+                            {
+                                explodeOnClick: true,
+                                innerRadius: "93%",
+                                radius: "100%",
+                                startAngle: 270,
+                                type: "doughnut",
+                                dataPoints: [
+                                    { y: (repData.salesByProduct[1].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[1].productTitle + ": <span>" + repData.salesByProduct[1].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
+                                    { y: (1 - repData.salesByProduct[1].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true }
+                                ]
+                            }
+                        ]
+                    });
+
+                    // CanvasJS doughnut chart to show annual sales percentage from third product #3
+                    var salesDoughnutChartDE = new CanvasJS.Chart("sales-doughnut-chart-de", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        title: {
+                            fontColor: "#848484",
+                            fontSize: 56,
+                            horizontalAlign: "center",
+                            text: (repData.salesByProduct[2].sales / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }),
+                            verticalAlign: "center"
+                        },
+                        toolTip: {
+                            backgroundColor: "#ffffff",
+                            borderThickness: 0,
+                            cornerRadius: 0,
+                            fontColor: "#424242"
+                        },
+                        data: [
+                            {
+                                explodeOnClick: true,
+                                innerRadius: "96%",
+                                radius: "100%",
+                                startAngle: 270,
+                                type: "doughnut",
+                                dataPoints: [
+                                    { y: (repData.salesByProduct[2].sales / repData.yearSales) * 100, color: "#c70000", toolTipContent: repData.salesByProduct[2].productTitle + ": <span>" + repData.salesByProduct[2].sales.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + "</span>" },
+                                    { y: (1 - repData.salesByProduct[2].sales / repData.yearSales) * 100, color: "#424242", toolTipContent: null, exploded: true }
+                                ]
+                            }
+                        ]
+                    });
+
+
+
+
+                    // CanvasJS doughnut chart to show revenue and costs
+                    var netProfit = repData.yearSales / 6;
+                    var costs = repData.yearSales - repData.yearSales / 6;
+                    var usersDoughnutChart = new CanvasJS.Chart("users-doughnut-chart", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        toolTip: {
+                            backgroundColor: "#000000",
+                            borderThickness: 2,
+                            cornerRadius: 0,
+                            fontColor: "#ffffff",
+                            contentFormatter: function (e) {
+                                return e.entries[0].dataPoint.name + ": " + e.entries[0].dataPoint.y.toLocaleString("el-GR", { style: "currency", currency: "EUR" }) + " - " + (e.entries[0].dataPoint.y / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }); // calcuting and showing percentage of users inside tooltip
+                            }
+                        },
+                        data: [
+                            {
+                                innerRadius: "82%",
+                                radius: "100%",
+                                showInLegend: false,
+                                startAngle: 180,
+                                type: "doughnut",
+                                dataPoints: [
+                                    { y: netProfit, name: "Net Profit", color: "#c70000" },
+                                    { y: costs, name: "Costs", color: "#424242", exploded: true }
+                                ]
+                            }
+                        ]
+                    });
+
+                    // CanvasJS spline chart to show revenue and profit
+                    var usersSplineChart = new CanvasJS.Chart("users-spline-chart", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        axisX: {
+                            gridThickness: 0,
+                            labelFontColor: "#bbbbbb",
+                            lineColor: "#bbbbbb"
+                        },
+                        axisY: {
+                            gridThickness: 0,
+                            labelFontColor: "#bbbbbb",
+                            lineColor: "#bbbbbb"
+                        },
+                        legend: {
+                            dockInsidePlotArea: true,
+                            fontColor: "#ffffff",
+                            fontSize: 16,
+                            horizontalAlign: "right",
+                            verticalAlign: "top"
+                        },
+                        toolTip: {
+                            backgroundColor: "#000000",
+                            borderThickness: 2,
+                            cornerRadius: 0,
+                            fontColor: "#ffffff",
+                            shared: true
+                        },
+                        data: [
+                            {
+                                color: "#424242",
+                                legendMarkerType: "square",
+                                legendText: "Revenue",
+                                name: "Revenue",
+                                showInLegend: true,
+                                type: "spline",
+                                dataPoints:
+                                [
+                                    { x: new Date(repData.yearSalesByMonth[0].month), y: repData.yearSalesByMonth[0].sales },
+                                    { x: new Date(repData.yearSalesByMonth[1].month), y: repData.yearSalesByMonth[1].sales },
+                                    { x: new Date(repData.yearSalesByMonth[2].month), y: repData.yearSalesByMonth[2].sales },
+                                    { x: new Date(repData.yearSalesByMonth[3].month), y: repData.yearSalesByMonth[3].sales },
+                                    { x: new Date(repData.yearSalesByMonth[4].month), y: repData.yearSalesByMonth[4].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[5].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[6].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[7].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[8].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[9].sales },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[10].sales }
+                                ]
+                            },
+                            {
+                                color: "#c70000",
+                                legendMarkerType: "square",
+                                legendText: "Net Profit",
+                                name: "Net Profit",
+                                showInLegend: true,
+                                type: "spline",
+                                dataPoints:
+                                [
+                                    { x: new Date(repData.yearSalesByMonth[0].month), y: repData.yearSalesByMonth[0].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[1].month), y: repData.yearSalesByMonth[1].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[2].month), y: repData.yearSalesByMonth[2].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[3].month), y: repData.yearSalesByMonth[3].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[4].month), y: repData.yearSalesByMonth[4].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[5].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[6].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[7].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[8].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[9].sales / 6 },
+                                    { x: new Date(repData.yearSalesByMonth[5].month), y: repData.yearSalesByMonth[10].sales / 6 }
+                                ]
+                            }
+                        ]
+                    });
+
+                    // CanvasJS bar chart to show category over total sales
+
+                    var cat1 = repData.salesByCategory[1] ? repData.salesByCategory[1].total : 0;
+                    var cat0 = repData.salesByCategory[0] ? repData.salesByCategory[0].total : 0;
+
+                    var usersCountriesBarChart = new CanvasJS.Chart("users-countries-bar-chart", {
+                        animationEnabled: true,
+                        backgroundColor: "transparent",
+                        axisX: {
+                            labelFontColor: "#000",
+                            labelFontSize: 20,
+                            lineThickness: 0,
+                            tickThickness: 0
+                        },
+                        axisY: {
+                            gridThickness: 0,
+                            lineThickness: 0,
+                            tickThickness: 0,
+                            valueFormatString: " "
+
+                        },
+                        toolTip: {
+                            backgroundColor: "#ffffff",
+                            borderThickness: 0,
+                            cornerRadius: 0,
+                            fontColor: "#424242",
+                            contentFormatter: function (e) {
+                                return e.entries[0].dataPoint.label + ": " + (e.entries[0].dataPoint.y / repData.yearSales).toLocaleString("el-GR", { style: "percent", minimumFractionDigits: 2 }); // calculating and showing category over total sales
+                            }
+                        },
+                        data: [
+                            {
+                                color: "#424242",
+                                indexLabelFontColor: "white",
+                                indexLabelFontFamily: "calibri",
+                                indexLabelFontSize: 20,
+                                indexLabelPlacement: "inside",
+                                type: "bar",
+                                dataPoints: [
+                                    { y: cat1, indexLabel: repData.salesByCategory[1].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: repData.salesByCategory[1].category },
+                                    { y: cat0, indexLabel: repData.salesByCategory[0].total.toLocaleString("el-GR", { style: "currency", currency: "EUR" }), label: repData.salesByCategory[0].category }
+                                ]
+                            }
+                        ]
+                    });
+
+                    jQuery.scrollSpeed(100, 400); // for smooth mouse wheel scrolling
+
+                    // jQuery.inview plugin
+                    $('.inview').one('inview', function (e, isInView) {
+                        if (isInView) {
+                            switch (this.id) {
+                                case "sales-doughnut-chart-us": salesDoughnutChartUS.render();
+                                    break;
+                                case "sales-doughnut-chart-nl": salesDoughnutChartNL.render();
+                                    break;
+                                case "sales-doughnut-chart-de": salesDoughnutChartDE.render();
+                                    break;
+                                case "page-views-spline-area-chart": pageViewsSplineAreaChart.render();
+                                    break;
+                                case "orders-spline-area-chart": ordersSplineAreaChart.render();
+                                    break;
+                                case "revenue-spline-area-chart": revenueSplineAreaChart.render();
+                                    break;
+                                case "users-doughnut-chart": usersDoughnutChart.render();
+                                    break;
+                                case "users-spline-chart": usersSplineChart.render();
+                                    break;
+                                case "users-countries-bar-chart": usersCountriesBarChart.render();
+                                    break;
+                            }
+                        }
+                    });
+                });
             };
             getData();
         });
@@ -320,55 +315,59 @@
 <div class="container">
     <h1 class="text-center">Sales from @Model.From.ToString("MM/yyyy") to @Model.To.ToString("MM/yyyy")</h1>
     <h5 class="mt-5 display-4">Total: <span class="tag tag-success" style="color: #c70000" id="revenue-tag">@Model.YearSales.ToString("C")</span></h5>
-    <hr class="mt-2">
+    
+    @if (Model.YearSales > 0)
+    {
+        <hr class="mt-2">
+        <h3>Top selling products</h3>
 
-    <h3>Top selling products</h3>
+        <!-- sales doughnut charts -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="inview" id="sales-doughnut-chart-us"></div>
+                <h3 class="align-center">#1 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[0].ProductTitle : "unavailable")</h3>
+            </div>
 
-    <!-- sales doughnut charts -->
-    <div class="row">
-        <div class="col-md-4">
-            <div class="inview" id="sales-doughnut-chart-us"></div>
-            <h3 class="align-center">#1 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[0].ProductTitle : "unavailable")</h3>
+            <div class="col-md-4">
+                <div class="inview" id="sales-doughnut-chart-nl"></div>
+                <h3 class="align-center">#2 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[1].ProductTitle : "unavailable")</h3>
+            </div>
+
+            <div class="col-md-4">
+                <div class="inview" id="sales-doughnut-chart-de"></div>
+                <h3 class="align-center">#3 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[2].ProductTitle : "unavailable")</h3>
+            </div>
         </div>
+        <!-- row sales doughnt charts -->
 
-        <div class="col-md-4">
-            <div class="inview" id="sales-doughnut-chart-nl"></div>
-            <h3 class="align-center">#2 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[1].ProductTitle : "unavailable")</h3>
+        <hr>
+
+        <h3>Revenue vs Net Profit</h3>
+
+        <!-- net on revenue doughnut and spline chart -->
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="inview" id="users-doughnut-chart"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="inview" id="users-spline-chart"></div>
+            </div>
         </div>
+        <!-- row users doughnut and spline chart -->
 
-        <div class="col-md-4">
-            <div class="inview" id="sales-doughnut-chart-de"></div>
-            <h3 class="align-center">#3 @(Model.SalesByProduct.Count() != 0 ? Model.SalesByProduct.ToArray()[2].ProductTitle : "unavailable")</h3>
+        <hr>
+
+        <h3>Top two categories</h3>
+
+        <!-- categories bar chart -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inview" id="users-countries-bar-chart"></div>
+            </div>
         </div>
-    </div>
-    <!-- row sales doughnt charts -->
+        <!-- row users countries bar chart -->
+    }
 
-    <hr>
-
-    <h3>Revenue vs Net Profit</h3>
-
-    <!-- net on revenue doughnut and spline chart -->
-    <div class="row">
-        <div class="col-lg-3 col-md-4">
-            <div class="inview" id="users-doughnut-chart"></div>
-        </div>
-
-        <div class="col-lg-9 col-md-8">
-            <div class="inview" id="users-spline-chart"></div>
-        </div>
-    </div>
-    <!-- row users doughnut and spline chart -->
-
-    <hr>
-
-    <h3>Top two categories</h3>
-
-    <!-- categories bar chart -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="inview" id="users-countries-bar-chart"></div>
-        </div>
-    </div>
-    <!-- row users countries bar chart -->
 
 </div> <!-- container -->

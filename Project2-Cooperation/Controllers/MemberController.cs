@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2_Cooperation.Models;
+using Project2_Cooperation.Models.ReportingViewModels;
 using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "Member")]
     public class MemberController : Controller
     {
         private readonly IProductRepository _repository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IReportingRepository _reportingRepo;
 
-        public MemberController(UserManager<ApplicationUser> userManager, IProductRepository repository)
+        public MemberController(UserManager<ApplicationUser> userManager, IProductRepository repository, IReportingRepository reportingRepo)
         {
             _userManager = userManager;
             _repository = repository;
+            _reportingRepo = reportingRepo;
         }
 
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
+
+            ViewData["currenttab"] = "products";
 
             return View(_repository.Products.Where(p => p.Member == currentUser));
         }
@@ -34,7 +41,7 @@ namespace Project2_Cooperation.Controllers
 
             var product = new Product
             {
-                MemberId = currentUser.Id
+                MemberId = currentUser.Id,
             };
             return View(product);
         }
@@ -45,6 +52,8 @@ namespace Project2_Cooperation.Controllers
             if (ModelState.IsValid)
             {
                 await Product.CopyImageToServer(product);
+
+                product.Stock = product.StockInitOffer;
 
                 _repository.CreateProduct(product);
 

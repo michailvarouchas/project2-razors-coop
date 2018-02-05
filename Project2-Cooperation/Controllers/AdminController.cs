@@ -35,6 +35,7 @@ namespace Project2_Cooperation.Controllers
         public IActionResult Index()
         {
             ViewData["currenttab"] = "products";
+
             return View(_productsRepo.Products.Include(p => p.Member));
         }
 
@@ -234,8 +235,8 @@ namespace Project2_Cooperation.Controllers
 
             //transactions
             var adminId = _userManager.GetUserId(User);
-            var ammount = product.Stock * product.BuyPrice;
-            _transactionRepository.AdminBuy(adminId, product.MemberId, ammount);
+            var amount = product.Stock * product.BuyPrice;
+            _transactionRepository.AdminBuy(adminId, product.MemberId, amount);
 
             return RedirectToAction(nameof(Index));
 
