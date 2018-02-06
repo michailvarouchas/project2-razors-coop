@@ -22,13 +22,20 @@ namespace Project_Cooperation.Services
             return _db.InternalAccounts.SingleOrDefault(u => u.ApplicationUserId == userId).Balance;
         }
 
-        public void AdminBuy(string adminId, string memberId, decimal ammount)
+        public bool AdminBuy(string adminId, string memberId, decimal ammount)
         {           
             var adminAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == adminId);
-            var memberAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == memberId);
-            memberAccount.Balance += ammount;
-            adminAccount.Balance -= ammount;
-            _db.SaveChanges();
+
+            if (adminAccount.Balance >= ammount)
+            {
+                var memberAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == memberId);
+                memberAccount.Balance += ammount;
+                adminAccount.Balance -= ammount;
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
+            
         }
         
         public bool TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount)

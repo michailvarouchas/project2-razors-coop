@@ -238,14 +238,18 @@ namespace Project2_Cooperation.Controllers
         public IActionResult BuyFromMember(int id)
         {
             var product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == id);
-            product.BoughtFromAdmin = true;
-            _productsRepo.UpdateProduct(product);
-
-            //transactions
             var adminId = _userManager.GetUserId(User);
             var amount = product.Stock * product.BuyPrice;
-            _transactionRepository.AdminBuy(adminId, product.MemberId, amount);
-
+            var success = _transactionRepository.AdminBuy(adminId, product.MemberId, amount);
+            
+            if (success)
+            {
+                product.BoughtFromAdmin = true;
+                _productsRepo.UpdateProduct(product);
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository.UserBalance(adminId).ToString("C2")}.";
+            
             return RedirectToAction(nameof(Index));
 
         }
