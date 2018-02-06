@@ -22,11 +22,10 @@ namespace Project2_Cooperation.Controllers
         private IUserCartRepository _userCartRepo;
         private IUserDetailsRepository _userDetailsRepo;
         private ITransactionRepository _transactionRepository;
-        private Cart _cart;
 
         public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository ordersRepo,
             IProductRepository productsRepo, IUserDetailsRepository userDetailsRepo,
-            ITransactionRepository transactionRepository, Cart cartService, IUserCartRepository userCartRepo)
+            ITransactionRepository transactionRepository, IUserCartRepository userCartRepo)
         {
             _userDetailsRepo = userDetailsRepo;
             _userManager = userManager;
@@ -34,7 +33,6 @@ namespace Project2_Cooperation.Controllers
             _userCartRepo = userCartRepo;
             _productsRepo = productsRepo;
             _transactionRepository = transactionRepository;
-            _cart = cartService;
         }
 
         public IActionResult CheckOut()
@@ -172,6 +170,7 @@ namespace Project2_Cooperation.Controllers
 
         }
 
+        [Authorize(Roles ="SuperAdmin")]
         public async Task<IActionResult> CancelOrder(int id)
         {
             var orderToCancel = _ordersRepo.GetOrders().Include(c => c.CartItems).SingleOrDefault(o => o.OrderId == id);

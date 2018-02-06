@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models.ReportingViewModels;
 using Project2_Cooperation.Services;
@@ -10,6 +11,7 @@ namespace Project2_Cooperation.Controllers
 {
     [Route("api/reporting")]
     [Produces("application/json")]
+    [Authorize(Roles = "SuperAdmin")]
     public class ReportingAPIController : Controller
     {
         private readonly IReportingRepository _reportingRepo;

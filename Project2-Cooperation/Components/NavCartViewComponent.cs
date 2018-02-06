@@ -9,16 +9,16 @@ namespace Project2_Cooperation.Components
 {
     public class NavCartViewComponent : ViewComponent
     {
-        private readonly Cart _cart;
+        //private readonly Cart _cart;
 
-        public NavCartViewComponent(Cart cart)
-        {
-            _cart = cart;
-        }
+        //public NavCartViewComponent(Cart cart)
+        //{
+        //    _cart = cart;
+        //}
 
         public IViewComponentResult Invoke()
         {
-            return View(_cart);
+            return View();
         }
     }
 }

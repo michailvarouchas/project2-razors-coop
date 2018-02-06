@@ -3,27 +3,36 @@
     ViewData["Title"] = "Products";
     Layout = "_MemberLayout";
 }
+
 <a class="btn-link" asp-action="CreateProduct">Add new</a>
 @if (Model != null)
 {
     <table class="table table-bordered mt-4">
         <tr>
             <th>Title</th>
-            <th>Price</th>
+            <th>Wholesale Price</th>
+            <th>Retail Price</th>
             <th>Category</th>
             <th>Status</th>
             <th>Initial Offer</th>
-            <th>Current Stock</th>
+            <th>Sold Items</th>
+            <th>Payment on sale</th>
+            <th>Commission</th>
         </tr>
         @foreach (var product in Model)
         {
             <tr>
                 <td>@product.Title</td>
+                <td>@product.BuyPrice.ToString("C")</td>
                 <td>@product.SalePrice.ToString("C")</td>
                 <td>@product.Category</td>
                 <td>@(product.IsLive ? "Sold" : "Offered")</td>
                 <td>@product.StockInitOffer</td>
-                <td>@product.Stock</td>
+                <td>@(product.StockInitOffer - product.Stock)</td>
+
+                <td>@((product.BoughtFromAdmin ? product.BuyPrice * product.StockInitOffer : 0).ToString("C"))</td>
+                <td>@(((product.StockInitOffer - product.Stock) * (product.BuyPrice * 1.5m / 3)).ToString("C"))</td>
+
             </tr>
         }
     </table>

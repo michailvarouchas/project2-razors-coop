@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
@@ -10,13 +11,14 @@ using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "SuperAdmin ,Member, User")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IProductRepository _productsRepo;
         private readonly IOrderRepository _ordersRepo;
 
-        public UserController(UserManager<ApplicationUser> userManager, IProductRepository repository, IOrderRepository ordersRepo, Cart cartService)
+        public UserController(UserManager<ApplicationUser> userManager, IProductRepository repository, IOrderRepository ordersRepo)
         {
             _userManager = userManager;
             _productsRepo = repository;

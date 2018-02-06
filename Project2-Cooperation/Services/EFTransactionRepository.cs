@@ -22,6 +22,18 @@ namespace Project_Cooperation.Services
             return _db.InternalAccounts.SingleOrDefault(u => u.ApplicationUserId == userId).Balance;
         }
 
+        public void CreateNewAccount(string userId)
+        {
+            var account = new InternalAccount
+            {
+                ApplicationUserId = userId,
+                LastTransactionDate = DateTime.Now,
+                Balance = 150
+            };
+            _db.InternalAccounts.Add(account);
+            _db.SaveChanges();
+        }
+
         public void AdminBuy(string adminId, string memberId, decimal ammount)
         {           
             var adminAccount = _db.InternalAccounts.SingleOrDefault(i => i.ApplicationUserId == adminId);

@@ -52,7 +52,7 @@ namespace Project2_Cooperation.Controllers
                 }
             }
             ViewData["currenttab"] = "orders";
-            return View(new ViewOrdersViewModel() { Orders = orders });
+            return View(new ViewOrdersViewModel() { Orders = orders.OrderByDescending(o => o.Date) });
 
         }
 

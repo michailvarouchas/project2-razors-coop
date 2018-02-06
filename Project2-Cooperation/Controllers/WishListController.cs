@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
@@ -9,6 +10,7 @@ using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, Member, User")]
     public class WishListController : Controller
     {
         private IProductRepository _productRepo;

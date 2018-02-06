@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
 using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, Member, User")]
     public class HomeController : Controller
     {
         private readonly IProductRepository _productsRepo;
 
-        public HomeController(IProductRepository repository, IOrderRepository ordersRepo)
+        public HomeController(IProductRepository repository)
         {
             _productsRepo = repository;
         }

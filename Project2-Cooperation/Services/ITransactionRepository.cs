@@ -12,6 +12,6 @@ namespace Project2_Cooperation.Services
         bool TransactionCheckout(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount);
         decimal UserBalance(string userId);
         void ReturnMoney(string adminId, string userId, IEnumerable<ApplicationUser> members, decimal ammount);
-       
+        void CreateNewAccount(string userId);
     }
 }

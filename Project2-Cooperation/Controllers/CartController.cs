@@ -13,18 +13,16 @@ namespace Project2_Cooperation.Controllers
     [Authorize(Roles = "SuperAdmin, Member, User")]
     public class CartController : Controller
     {
-        private IProductRepository _prodRepo;
-        private IUserCartRepository _userCartRepo;
-        private UserManager<ApplicationUser> _userManager;
-        private Cart _cart;
+        private readonly IProductRepository _prodRepo;
+        private readonly IUserCartRepository _userCartRepo;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartController(IProductRepository prodRepository, IUserCartRepository userCartRepo,
-                                UserManager<ApplicationUser> userManager, Cart cartService)
+        public CartController(IProductRepository prodRepository, IUserCartRepository userCartRepo, 
+                                UserManager<ApplicationUser> userManager)
         {
             _prodRepo = prodRepository;
             _userCartRepo = userCartRepo;
             _userManager = userManager;
-            _cart = cartService;
         }
 
         public IActionResult Index()

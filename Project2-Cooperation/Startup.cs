@@ -64,7 +64,7 @@ namespace Project2_Cooperation
             services.AddTransient<IReportingRepository, EFReportingRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddScoped<Cart>(sp => SessionCart.GetSessionCart(sp));
+            //services.AddScoped<Cart>(sp => SessionCart.GetSessionCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMemoryCache();

@@ -18,14 +18,12 @@ namespace Project2_Cooperation.Controllers
         private IProductRepository _prodRepo;
         private IUserCartRepository _userCartRepo;
         private UserManager<ApplicationUser> _userManager;
-        private Cart _cart;
 
-        public CartAPIController(IProductRepository prodRepo, IUserCartRepository userCartRepo, Cart cartService, UserManager<ApplicationUser> userManager)
+        public CartAPIController(IProductRepository prodRepo, IUserCartRepository userCartRepo, UserManager<ApplicationUser> userManager)
         {
             _prodRepo = prodRepo;
             _userCartRepo = userCartRepo;
             _userManager = userManager;
-            _cart = cartService;
         }
 
         //GET -- api/cart

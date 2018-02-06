@@ -24,17 +24,20 @@ namespace Project2_Cooperation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ITransactionRepository _transactionRepo;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ITransactionRepository transactionRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _transactionRepo = transactionRepo;
         }
 
         [TempData]
@@ -231,12 +234,14 @@ namespace Project2_Cooperation.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return View("ConfirmEmail");
-
                     //give user the role "User"
-                    //var role = await _userManager.AddToRoleAsync(user, "User");
+                    var role = await _userManager.AddToRoleAsync(user, "User");
+
+                    //give an initial account
+                    _transactionRepo.CreateNewAccount(user.Id);
+
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return View("ConfirmEmail");
 
                     //return RedirectToLocal(returnUrl);   
                 }

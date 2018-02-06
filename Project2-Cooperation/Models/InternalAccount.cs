@@ -18,5 +18,6 @@ namespace Project2_Cooperation.Models
 
         [Required]
         public decimal Balance { get; set; }
+
     }
 }

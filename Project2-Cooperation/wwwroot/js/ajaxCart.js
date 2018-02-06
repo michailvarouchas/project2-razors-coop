@@ -58,7 +58,7 @@ var ajaxGetCart = () => {
         else {
             emptyCart();
         }
-        console.log(shopCart);
+        console.log(cart);
         document.getElementById('cartCount').innerHTML = total.toFixed(2) + " &euro;";
     });
 };
