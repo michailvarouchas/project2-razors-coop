@@ -155,7 +155,7 @@ namespace Project2_Cooperation.Controllers
                     }
                     else
                     {
-                        TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository.UserBalance(userId)}.";
+                        TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository.UserBalance(userId).ToString("C2")}.";
                         checkOut.Cart = dbCart;
                         return View(checkOut);
                     }
