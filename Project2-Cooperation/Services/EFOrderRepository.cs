@@ -39,6 +39,7 @@ namespace Project2_Cooperation.Services
             {
                 _db.Orders.Add(order);
             }
+
             _db.SaveChanges();
         }
 

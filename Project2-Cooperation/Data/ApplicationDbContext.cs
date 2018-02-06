@@ -29,7 +29,9 @@ namespace Project2_Cooperation.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<WishList> Wishlist { get; set; }
+        public DbSet<UserCart> UserCart { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<UserCartItem> UserCartItems { get; set; }
         public DbSet<InternalAccount> InternalAccounts { get; set; }
     }
 }

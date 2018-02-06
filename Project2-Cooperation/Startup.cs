@@ -58,6 +58,7 @@ namespace Project2_Cooperation
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddTransient<IUserDetailsRepository, EFUserDetailsRepository>();
+            services.AddTransient<IUserCartRepository, EFUserCartRepository>();
             services.AddTransient<IWishListRepository, EFWishListRepository>();
             services.AddTransient<ITransactionRepository, EFTransactionRepository>();
             services.AddTransient<IReportingRepository, EFReportingRepository>();

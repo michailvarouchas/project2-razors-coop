@@ -36,11 +36,6 @@ var popUpCart = () => {
     var toggleContent = document.getElementById('cartItems');
     toggleLayout.className += ' show';
     toggleContent.className += ' show';
-    setTimeout(function () {
-        toggleLayout.classList.remove('show');
-        toggleContent.classList.remove('show');
-    }, 3500);
-    
 };
 
 var ajaxGetCart = () => {

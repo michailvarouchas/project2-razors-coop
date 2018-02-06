@@ -11,9 +11,10 @@ using System;
 namespace Project2Cooperation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180205194711_db cart")]
+    partial class dbcart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +191,8 @@ namespace Project2Cooperation.Migrations
 
                     b.Property<int>("Quantity");
 
+                    b.Property<string>("UserCartApplicationUserId");
+
                     b.Property<string>("WishListApplicationUserId");
 
                     b.HasKey("CartItemId");
@@ -197,6 +200,8 @@ namespace Project2Cooperation.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserCartApplicationUserId");
 
                     b.HasIndex("WishListApplicationUserId");
 
@@ -293,30 +298,6 @@ namespace Project2Cooperation.Migrations
                     b.ToTable("UserCart");
                 });
 
-            modelBuilder.Entity("Project2_Cooperation.Models.UserCartItem", b =>
-                {
-                    b.Property<int>("CartItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("OrderId");
-
-                    b.Property<int>("ProductId");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<string>("UserCartApplicationUserId");
-
-                    b.HasKey("CartItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserCartApplicationUserId");
-
-                    b.ToTable("UserCartItems");
-                });
-
             modelBuilder.Entity("Project2_Cooperation.Models.UserDetails", b =>
                 {
                     b.Property<string>("ApplicationUserId");
@@ -411,6 +392,10 @@ namespace Project2Cooperation.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Project2_Cooperation.Models.UserCart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserCartApplicationUserId");
+
                     b.HasOne("Project2_Cooperation.Models.WishList")
                         .WithMany("WishListItems")
                         .HasForeignKey("WishListApplicationUserId");
@@ -446,22 +431,6 @@ namespace Project2Cooperation.Migrations
                         .WithOne("UserCart")
                         .HasForeignKey("Project2_Cooperation.Models.UserCart", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Project2_Cooperation.Models.UserCartItem", b =>
-                {
-                    b.HasOne("Project2_Cooperation.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Project2_Cooperation.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Project2_Cooperation.Models.UserCart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("UserCartApplicationUserId");
                 });
 
             modelBuilder.Entity("Project2_Cooperation.Models.UserDetails", b =>

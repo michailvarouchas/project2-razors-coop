@@ -245,6 +245,7 @@ ul.dropdown-cart li .item-right button {
     #mainNav .navbar-brand,
     #mainNav .navbar-nav > li.nav-item > a.nav-link, #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
         color: darkslategrey;
+        font-size: 0.9em;
     }
 
     #mainNav .navbar-brand:hover, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover, #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {

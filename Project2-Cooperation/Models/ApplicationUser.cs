@@ -18,6 +18,8 @@ namespace Project2_Cooperation.Models
 
         public virtual WishList Wishlist { get; set; }
 
+        public virtual UserCart UserCart { get; set; }
+
         public ApplicationUser() : base()
         {
         }

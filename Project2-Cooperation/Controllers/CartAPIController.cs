@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
 using Project2_Cooperation.Services;
@@ -11,35 +12,66 @@ namespace Project2_Cooperation.Controllers
 {
     [Route("api/cart")]
     [Produces("application/json")]
+    [Authorize(Roles = "SuperAdmin, Member, User")]
     public class CartAPIController : Controller
     {
-        private IProductRepository _repository;
+        private IProductRepository _prodRepo;
+        private IUserCartRepository _userCartRepo;
+        private UserManager<ApplicationUser> _userManager;
         private Cart _cart;
 
-        public CartAPIController(IProductRepository prodRepository, Cart cartService)
+        public CartAPIController(IProductRepository prodRepo, IUserCartRepository userCartRepo, Cart cartService, UserManager<ApplicationUser> userManager)
         {
-            _repository = prodRepository;
+            _prodRepo = prodRepo;
+            _userCartRepo = userCartRepo;
+            _userManager = userManager;
             _cart = cartService;
         }
 
         //GET -- api/cart
         [HttpGet]
-        public Cart Get()
+        public UserCart Get()
         {
-            return _cart;
+            var userId = _userManager.GetUserId(User);
+
+            var userCart = _userCartRepo.AllUserCarts.SingleOrDefault(u => u.ApplicationUserId == userId);
+
+            if (userCart != null)
+            {
+                //fill with products
+                foreach (var item in userCart.CartItems)
+                {
+                    item.Product = _prodRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+                }
+            }
+            else
+            {
+                _userCartRepo.CreateNewEmptyCart(userId);
+            }
+
+            return userCart;
         }
 
         //POST -- api/cart/5
         [HttpPost]
         public Product Post([FromBody] string prodId)
         {
-            var id = Int32.Parse(prodId);
+            if (prodId != null)
+            {
+                var id = Int32.Parse(prodId);
 
-            var prodToAdd = _repository.Products.SingleOrDefault(p => p.ProductId == id);
+                var prodToAdd = _prodRepo.Products.SingleOrDefault(p => p.ProductId == id);
 
-            _cart.AddToCart(prodToAdd);
+                //_cart.AddToCart(prodToAdd);
 
-            return prodToAdd;
+                //db cart
+                var userId = _userManager.GetUserId(User);
+
+                _userCartRepo.AddToCart(id, userId, 1);
+
+                return prodToAdd;
+            }
+            return null;
         }
 
         //DELETE -- api/cart/5
@@ -50,13 +82,12 @@ namespace Project2_Cooperation.Controllers
             {
                 var id = Int32.Parse(prodId);
 
-                var cartItemToRemove = _cart.CartItems.SingleOrDefault(ci => ci.Product.ProductId == id);
+                //db cart
+                var userId = _userManager.GetUserId(User);
 
-                var prodToRemove = cartItemToRemove.Product;
+                var prodToRemove = _prodRepo.Products.SingleOrDefault(p => p.ProductId == id);
 
-                var quantity = cartItemToRemove.Quantity;
-
-                _cart.RemoveFromCart(prodToRemove, quantity);
+                _userCartRepo.RemoveFromCart(id, userId, 1);
 
                 return prodToRemove;
             }

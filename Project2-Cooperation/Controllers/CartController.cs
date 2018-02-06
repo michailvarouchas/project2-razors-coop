@@ -2,34 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Cooperation.Models;
 using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, Member, User")]
     public class CartController : Controller
     {
-        private IProductRepository _repository;
+        private IProductRepository _prodRepo;
+        private IUserCartRepository _userCartRepo;
+        private UserManager<ApplicationUser> _userManager;
         private Cart _cart;
 
-        public CartController(IProductRepository prodRepository, Cart cartService)
+        public CartController(IProductRepository prodRepository, IUserCartRepository userCartRepo,
+                                UserManager<ApplicationUser> userManager, Cart cartService)
         {
-            _repository = prodRepository;
+            _prodRepo = prodRepository;
+            _userCartRepo = userCartRepo;
+            _userManager = userManager;
             _cart = cartService;
         }
 
         public IActionResult Index()
         {
-            return View(_cart);
+            var userId = _userManager.GetUserId(User);
+
+            var userCart = _userCartRepo.AllUserCarts.SingleOrDefault(u => u.ApplicationUserId == userId);
+
+            //fill with products
+            foreach (var item in userCart.CartItems)
+            {
+                item.Product = _prodRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+            }
+
+            return View(userCart);
         }
 
         public IActionResult AddToCart(int id, int qty = 1)
         {
-            var prodToAdd =_repository.Products.SingleOrDefault(p => p.ProductId == id);
+            var prodToAdd =_prodRepo.Products.SingleOrDefault(p => p.ProductId == id);
 
-            _cart.AddToCart(prodToAdd, qty);
-            
+            //db cart
+            var userId = _userManager.GetUserId(User);
+
+            _userCartRepo.AddToCart(id, userId, 1);
+
             TempData["message"] = $"Cart successfully updated";
 
             return RedirectToAction(nameof(Index));
@@ -37,9 +58,11 @@ namespace Project2_Cooperation.Controllers
 
         public IActionResult RemoveFromCart(int id)
         {
-            var prodToRemove = _cart.CartItems.SingleOrDefault(ci => ci.Product.ProductId == id).Product;
+            var userId = _userManager.GetUserId(User);
 
-            _cart.RemoveFromCart(prodToRemove);
+            var prodToRemove = _prodRepo.Products.SingleOrDefault(p => p.ProductId == id);
+
+            _userCartRepo.RemoveFromCart(id, userId, 1);
 
             TempData["message"] = $"Cart successfully updated";
 

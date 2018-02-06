@@ -19,16 +19,19 @@ namespace Project2_Cooperation.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private IOrderRepository _ordersRepo;
         private IProductRepository _productsRepo;
+        private IUserCartRepository _userCartRepo;
         private IUserDetailsRepository _userDetailsRepo;
         private ITransactionRepository _transactionRepository;
         private Cart _cart;
 
         public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository ordersRepo,
-            IProductRepository productsRepo, IUserDetailsRepository userDetailsRepo, ITransactionRepository transactionRepository, Cart cartService)
+            IProductRepository productsRepo, IUserDetailsRepository userDetailsRepo,
+            ITransactionRepository transactionRepository, Cart cartService, IUserCartRepository userCartRepo)
         {
             _userDetailsRepo = userDetailsRepo;
             _userManager = userManager;
             _ordersRepo = ordersRepo;
+            _userCartRepo = userCartRepo;
             _productsRepo = productsRepo;
             _transactionRepository = transactionRepository;
             _cart = cartService;
@@ -40,32 +43,65 @@ namespace Project2_Cooperation.Controllers
 
             var checkOut = new CheckOutViewModel
             {
-                Cart = _cart,
+                Cart = _userCartRepo.AllUserCarts.SingleOrDefault(u => u.ApplicationUserId == loggedUserId),
                 Order = new Order()
                 {
                     UserDetails = _userDetailsRepo.UserDetails.SingleOrDefault(u => u.ApplicationUserId == loggedUserId)
                 }
             };
 
+            foreach (var item in checkOut.Cart.CartItems)
+            {
+                item.Product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+            }
+
             return View(checkOut);
         }
 
         [HttpPost]
-        public async Task <IActionResult> CheckOut(CheckOutViewModel checkOut)
+        public async Task<IActionResult> CheckOut(CheckOutViewModel checkOut)
         {
+            var userId = _userManager.GetUserId(User);
+            var dbCart = _userCartRepo.AllUserCarts.SingleOrDefault(u => u.ApplicationUserId == userId);
+
             if (ModelState.IsValid)
             {
                 bool availability = true;
 
+                //var cartItems = new List<CartItem>();
+
+                //foreach (var item in dbCart.CartItems)
+                //{
+                //    var ci = new CartItem
+                //    {
+                //        ProductId = item.ProductId,
+                //        Quantity = item.Quantity
+                //    };
+                //    cartItems.Add(ci);
+                //}
+
                 //get cartItems from Session and add them into the order
-                checkOut.Order.CartItems = _cart.CartItems;
+                var ciList = new List<CartItem>();
+
+                foreach (var item in dbCart.CartItems)
+                {
+                    var ci = new CartItem
+                    {
+                        ProductId = item.ProductId,
+                        Product = _productsRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId),
+                        Quantity = item.Quantity,
+
+                    };
+                    ciList.Add(ci);
+                }
+                checkOut.Order.CartItems = ciList;
 
                 checkOut.Order.Date = DateTime.Now;
 
                 checkOut.Order.Total = _ordersRepo.GetOrderTotal(checkOut.Order);
 
                 //add applicationUserId
-                checkOut.Order.UserDetails.ApplicationUserId = _userManager.GetUserId(User);
+                checkOut.Order.UserDetails.ApplicationUserId = userId;
 
                 //check availability
                 var ctr = new List<CartItem>();
@@ -78,30 +114,31 @@ namespace Project2_Cooperation.Controllers
                         ctr.Add(cartItem);
                         availability &= false;
                     }
-                    if(stock < cartItem.Quantity)
+                    if (stock < cartItem.Quantity)
                     {
-                        _cart.RemoveFromCart(cartItem.Product, cartItem.Quantity - stock);
+                        _userCartRepo.RemoveFromCart(cartItem.ProductId, userId, cartItem.Quantity - stock);
+                        //_cart.RemoveFromCart(cartItem.Product, cartItem.Quantity - stock);
                         availability &= false;
                     }
                 }
-                foreach (var item in ctr)
-                {
-                    _cart.RemoveFromCart(item.Product, item.Quantity);
-                }
+
                 if (!availability)
                 {
-                    checkOut.Cart = _cart;
+                    foreach (var item in ctr)
+                    {
+                        _userCartRepo.RemoveFromCart(item.ProductId, userId, item.Quantity);
+                        //_cart.RemoveFromCart(item.Product, item.Quantity);
+                    }
+
                     TempData["failMessage"] = "Some products are no longer available thus removed from your cart!";
+                    checkOut.Cart = dbCart;
                     return View(checkOut);
                 }
-
-                
 
                 if (checkOut.Order.CartItems.Count() != 0)
                 {
 
                     //add transaction
-                    var userId = _userManager.GetUserId(User);
                     var admin = await _userManager.FindByEmailAsync("admin@afdemp.gr");
                     var adminId = admin.Id;
 
@@ -121,17 +158,16 @@ namespace Project2_Cooperation.Controllers
                     else
                     {
                         TempData["failMessage"] = $"Insufficient balance. Your current balance is {_transactionRepository.UserBalance(userId)}.";
-
-                        return RedirectToAction(nameof(checkOut));
+                        checkOut.Cart = dbCart;
+                        return View(checkOut);
                     }
-
 
                 }
 
                 TempData["failMessage"] = "Products in your cart are no longer available!";
             }
 
-            checkOut.Cart = _cart;
+            checkOut.Cart = dbCart;
             return View(checkOut);
 
         }
@@ -156,12 +192,14 @@ namespace Project2_Cooperation.Controllers
             _transactionRepository.ReturnMoney(adminId, userId, members, orderToCancel.Total);
             _ordersRepo.CanceledOrder(orderToCancel);
             return RedirectToAction("ViewOrders", "Admin");
-                
+
         }
 
         public ActionResult Completed()
         {
-            _cart.ClearCart();
+            var userId = _userManager.GetUserId(User);
+
+            _userCartRepo.ClearCart(userId);
 
             return View();
         }

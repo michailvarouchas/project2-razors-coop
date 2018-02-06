@@ -8,6 +8,6 @@ namespace Project2_Cooperation.Models.EshopViewModels
     public class CheckOutViewModel
     {
         public Order Order { get; set; }
-        public Cart Cart { get; set; }
+        public UserCart Cart { get; set; }
     }
 }
