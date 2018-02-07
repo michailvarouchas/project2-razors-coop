@@ -17,7 +17,7 @@ namespace Project2_Cooperation.Services
             _db = db;
         }
 
-        public IQueryable<WishList> AllWishLists => _db.Wishlist.Include(w => w.WishListItems);
+        public IQueryable<WishList> AllWishLists => _db.Wishlist.Include(w => w.WishListItems).Include(u => u.ApplicationUser);
 
         public void AddToWishList(int productId, string userId, int quantity)
         {

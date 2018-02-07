@@ -68,9 +68,26 @@ namespace Project2_Cooperation.Controllers
             {
                 return View(userWishlist);
             }
-            
 
-            
+        }
+
+        public IActionResult AdminViewAllWishlists()
+        {
+            ViewData["currenttab"] = "wishlists";
+            var allUserWishlists = _wishListRepo.AllWishLists;
+            if (allUserWishlists != null)
+            {
+                foreach (var wishlist in allUserWishlists)
+                {
+                    foreach (var item in wishlist.WishListItems)
+                    {
+                        item.Product = _productRepo.Products.SingleOrDefault(p => p.ProductId == item.ProductId);
+                    }
+                }
+
+                return View(allUserWishlists);
+            }
+            return View();
         }
     }
 }

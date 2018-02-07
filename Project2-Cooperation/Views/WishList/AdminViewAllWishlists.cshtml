@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WishList>
+@{
+    ViewData["Title"] = "View Users Wishlists";
+    Layout = "_AdminLayout";
+}
+
+@if (Model.Count() != 0)
+{
+    <div id="accordion">
+
+
+        <div class="card">
+            @foreach (var item in Model)
+            {
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            @item.ApplicationUser.Email
+                        </button>
+                    </h5>
+                </div>
+
+                {
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        @foreach (var witem in item.WishListItems)
+                        {
+                            <div class="card-body">
+                                <div class="col-md-6">@witem.Product.Title </div>
+                                <div class="col-md-6">@witem.Quantity</div>
+                            </div>
+                        }
+                    </div>
+
+                }
+
+            }
+
+        </div>
+
+    </div>
+
+}
+else
+{
+    <h4> There are no wishlists at the moment</h4>
+
+}
+
+

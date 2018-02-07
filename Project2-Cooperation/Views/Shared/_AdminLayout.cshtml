@@ -49,6 +49,9 @@
             <li class="nav-item">
                 <a class="nav-link text-uppercase @(ViewData["currenttab"] == "users"? "admin-activetab":"")" asp-controller="Admin" asp-action="ViewUsers">Users</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-uppercase @(ViewData["currenttab"] == "wishlists"? "admin-activetab":"")" asp-controller="WishList" asp-action="AdminViewAllWishlists">Wishlists</a>
+            </li>
         </ul>
     </div>
     <div class="bg-light">
