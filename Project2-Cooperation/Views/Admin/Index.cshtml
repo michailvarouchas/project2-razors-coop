@@ -4,7 +4,7 @@
     Layout = "_AdminLayout";
 }
 
-<h1 class="text-center mt-5">Available products</h1>
+<h1 class="text-center">Available products</h1>
 @if (Model.Where(p => p.BoughtFromAdmin == true).Count() != 0)
 {
     <table class="table table-bordered mt-4">

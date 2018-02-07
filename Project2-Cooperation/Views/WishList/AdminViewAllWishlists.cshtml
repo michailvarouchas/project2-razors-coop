@@ -4,31 +4,39 @@
     Layout = "_AdminLayout";
 }
 
+<h1 class="text-center">All Wishlists</h1>
+
 @if (Model.Count() != 0)
 {
     <div id="accordion">
-
-
         <div class="card">
             @foreach (var item in Model)
             {
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a class="btn btn-link d-block" data-toggle="collapse" data-target="#@item.ApplicationUserId" aria-expanded="true" aria-controls="collapseOne">
                             @item.ApplicationUser.Email
-                        </button>
+                        </a>
                     </h5>
                 </div>
 
                 {
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        @foreach (var witem in item.WishListItems)
-                        {
-                            <div class="card-body">
-                                <div class="col-md-6">@witem.Product.Title </div>
-                                <div class="col-md-6">@witem.Quantity</div>
+                    <div id="@item.ApplicationUserId" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <h4 class="col-md-6">Product </h4>
+                                <h4 class="col-md-6">Quantity</h4>
                             </div>
-                        }
+                            @foreach (var witem in item.WishListItems)
+                            {
+                                <div class="row">
+                                    <div class="col-6">@witem.Product.Title </div>
+                                    <div class="col-6">@witem.Quantity</div>
+                                </div>
+                            }
+                        </div>
+
                     </div>
 
                 }

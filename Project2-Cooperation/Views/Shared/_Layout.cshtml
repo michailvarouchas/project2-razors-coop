@@ -53,6 +53,9 @@
                             <li class="nav-item display-4">
                                 <a class="nav-link" asp-controller="Admin" asp-action="ViewUsers">Users</a>
                             </li>
+                            <li class="nav-item display-4">
+                                <a class="nav-link" asp-controller="WishList" asp-action="AdminViewAllWishlists">Wishlists</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -70,10 +73,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav text-center">
                             <li class="nav-item display-4">
-                                <a class="nav-link" asp-controller="Member" asp-action="Index">Products</a>
+                                <a class="nav-link" asp-controller="Member" asp-action="Index">My Products</a>
                             </li>
                             <li class="nav-item display-4">
-                                <a class="nav-link" href="#">Sales</a>
+                                <a class="nav-link" asp-controller="Member" asp-action="CreateProduct">New Product Offer</a>
                             </li>
                         </ul>
                     </div>
@@ -130,14 +133,14 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top @(ViewBag.Page != "home" ? "navbar-light bg-light" : "navbar-light")" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">Organic Power</a>
+            <a class="navbar-brand js-scroll-trigger" href="/">Organic Power</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/">Home</a>
+                        <a class="nav-link js-scroll-trigger" href="#page-top">Home</a>
                     </li>
                     @if (ViewBag.Page == "home")
                     {

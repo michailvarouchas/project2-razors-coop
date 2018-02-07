@@ -25,19 +25,22 @@ namespace Project2_Cooperation.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ITransactionRepository _transactionRepo;
+        private readonly IUserCartRepository _userCartRepo;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ITransactionRepository transactionRepo)
+            ITransactionRepository transactionRepo,
+            IUserCartRepository userCartRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _transactionRepo = transactionRepo;
+            _userCartRepo = userCartRepo;
         }
 
         [TempData]
@@ -239,9 +242,11 @@ namespace Project2_Cooperation.Controllers
 
                     //give an initial account
                     _transactionRepo.CreateNewAccount(user.Id);
+                    //initialize user cart
+                    _userCartRepo.CreateNewEmptyCart(user.Id);
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
-                    return View("ConfirmEmail");
+                    return View("ConfirmYourEmail");
 
                     //return RedirectToLocal(returnUrl);   
                 }

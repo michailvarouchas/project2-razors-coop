@@ -43,6 +43,8 @@ namespace Project2_Cooperation.Controllers
             {
                 MemberId = currentUser.Id,
             };
+
+            ViewData["currenttab"] = "create";
             return View(product);
         }
 

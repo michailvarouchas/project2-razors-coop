@@ -3,8 +3,7 @@
     ViewData["Title"] = "Products";
     Layout = "_MemberLayout";
 }
-
-<a class="btn-link" asp-action="CreateProduct">Add new</a>
+<h1 class="text-center">@User.Identity.Name</h1>
 @if (Model != null)
 {
     <table class="table table-bordered mt-4">
@@ -42,6 +41,7 @@ else
     <h4>There are no products available at the moment</h4>
 
 }
+<a class="btn btn-sm btn-outline-success" asp-action="CreateProduct">Add new</a>
 
 
 

@@ -41,11 +41,11 @@
     object-fit: cover;
 }
 
-.portfolio-box {
+/*.portfolio-box {
     height: 17em;
     object-fit: cover;
     overflow: hidden;
-}
+}*/
 
 
 .card-title {
