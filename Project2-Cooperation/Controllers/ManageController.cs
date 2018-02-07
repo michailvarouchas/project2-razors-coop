@@ -495,7 +495,7 @@ namespace Project2_Cooperation.Controllers
         {
             return string.Format(
                 AuthenicatorUriFormat,
-                _urlEncoder.Encode("Project2_Cooperation"),
+                _urlEncoder.Encode("TheRazors"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
