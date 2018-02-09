@@ -47,7 +47,7 @@ namespace Project2_Cooperation.Controllers
             //db cart
             var userId = _userManager.GetUserId(User);
 
-            _userCartRepo.AddToCart(id, userId, 1);
+            _userCartRepo.AddToCart(id, userId, qty);
 
             TempData["message"] = $"Cart successfully updated";
 

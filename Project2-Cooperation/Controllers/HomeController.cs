@@ -10,7 +10,6 @@ using Project2_Cooperation.Services;
 
 namespace Project2_Cooperation.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, Member, User")]
     public class HomeController : Controller
     {
         private readonly IProductRepository _productsRepo;
